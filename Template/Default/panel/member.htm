@@ -43,7 +43,7 @@
     </div>
     <div class="xe-label">
         <strong class="num">{$allNode}</strong>
-        <span>There node</span>
+        <span>Active nodes</span>
     </div>
 </div>
 
@@ -71,7 +71,7 @@
         <div class="chart-label chart-label-small">
             <div class="h4 text-purple text-bold" data-count="this" data-from="0.00" data-to="{$onlineNum}" data-suffix="%" data-duration="1.5">{$onlineNum}%</div>
             <span class="text-small text-upper text-muted">Percentage Online</span><br />
-            <span class="text-small text-upper text-muted">registered user：<code> {$userCount} </code><br/>The number of check-ins：<code> {$checkCount} </code><br/></span>
+            <span class="text-small text-upper text-muted">Registered user：<code> {$userCount} </code><br/>Number of check-ins：<code> {$checkCount} </code><br/></span>
             <span class="text-small text-upper text-muted">Real-time online：<code> {$online} </code><br/></span>
         </div>
         <div id="server-uptime-chart" style="height: 134px;"></div>
@@ -80,8 +80,8 @@
     <div class="chart-item-bg">
         <div class="chart-label chart-label-small">
             <div class="h4 text-secondary text-bold" data-count="this" data-from="0.00" data-to="{$systemTransfer}" data-suffix="GB" data-decimal="." data-duration="2">{$systemTransfer}</div>
-            <span class="text-small text-upper text-muted">{SITE_NAME} It has generated traffic<code>{$systemTransfer}</code>GB</span><br />
-            <span class="text-small text-upper text-muted">{SITE_NAME} already have<code>{$useUserCount}</code>People use</span>
+            <span class="text-small text-upper text-muted">{SITE_NAME} is generated <code>{$systemTransfer}</code>GB traffic</span><br />
+            <span class="text-small text-upper text-muted">{SITE_NAME} already have<code>{$useUserCount}</code>users</span>
         </div>
 
         <div id="sales-avg-chart" style="height: 134px; position: relative;">
