@@ -6,15 +6,15 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="row center">
-                <h1>邀请码</h1>
-                <h5>如遇到无邀请码请找已经注册的用户获取。</h5>
+                <h1>Invitation code</h1>
+                <h5>In case that there is no invitation code, please find registered users to get access from him.</h5>
             </div>
             <table class="table" style="color:#FFF;">
                 <thead>
                 <tr>
-                    <th style="color:#FFF;" width="180">添加时间</th>
-                    <th style="color:#FFF;">邀请码</th>
-                    <th style="color:#FFF;" width="100">状态</th>
+                    <th style="color:#FFF;" width="180">Time</th>
+                    <th style="color:#FFF;">Invitation code</th>
+                    <th style="color:#FFF;" width="100">Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -24,17 +24,17 @@
                     <td>{(date('Y-m-d H:i:s', $invite->dateLine))}</td>
                     <td>{$invite->invite}</td>
                     <td><if condition="$invite->status == 0">
-                        <a href="auth/login?invite={$invite->invite}#register" target="_blank">点击使用</a>
-                        <elseif condition="$invite->status == 1">已用</elseif><else>过期</if></td>
+                        <a href="auth/login?invite={$invite->invite}#register" target="_blank">Click Use</a>
+                        <elseif condition="$invite->status == 1">used</elseif><else>Expired</if></td>
                 </tr>
                 </loop>
                 <else>
-                <tr><td colspan="3" align="center" style="text-align:center;">木有邀请码~ ٩( \'ω\' )و </td></tr>
+                <tr><td colspan="3" align="center" style="text-align:center;">invitation codes</td></tr>
                 </if>
                 </tbody>
             </table>
             <div class="row center">
-                <h4><a href="auth/login" class="btn btn-black btn-icon"><span>&nbsp;回到登录&nbsp;</span><i class="fa-mail-reply-all"></i></a></h4>
+                <h4><a href="auth/login" class="btn btn-black btn-icon"><span>&nbsp;Back to Login&nbsp;</span><i class="fa-mail-reply-all"></i></a></h4>
             </div>
         </div>
     </div>
