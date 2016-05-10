@@ -147,8 +147,10 @@
 								finish: function() {
 									if (result.code == 200) {
 										if(result.data.error == 0) {
+											toastr.success(result.data.message, "Note!", opts);
 											setTimeout("window.location.href = '/member'", 2000);
 										} else {
+											toastr.error(result.data.message, "Note!", opts);
 											$('#email').select();
 										}
 									} else {
@@ -242,8 +244,10 @@
 								finish: function() {
 									if (result.code == 200) {
 										if(result.data.error == 0) {
+											toastr.success(result.data.message, "Note!", opts);
 											setTimeout('$(".login-button").trigger("click");', 2000);
 										} else {
+											toastr.error(result.data.message, "Note!", opts);
 											$('#email').select();
 										}
 									}  else {
@@ -266,6 +270,7 @@
 			});
 			$("form#login .form-group:has(.form-control):first .form-control").focus();
 			<if condition="$globalMessage[0]!=null && $globalMessage[0]->enable==1">
+			toastr.success("{($globalMessage[0]->content)}", "Note", opts);
 			</if>
 		});
 	</script>
