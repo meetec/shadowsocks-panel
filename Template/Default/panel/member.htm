@@ -10,7 +10,7 @@
             </div>
             <div class="xe-label">
                 <strong class="num">99.9%</strong>
-                <span>服务在线率</span>
+                <span>Server Uptime</span>
             </div>
         </div>
 
@@ -23,13 +23,13 @@
 
                 <div id="checkin-on" <if condition="!$checked">style="display:none;"</if> >
                 <strong>
-                    <a id="checkin" href="javascript:;" style="color:#000;">点击签到</a>
+                    <a id="checkin" href="javascript:;" style="color:#000;">Click to sign in</a>
                 </strong>
-                <span id="checkin-tag">签到送流量</span>
+                <span id="checkin-tag">Get traffic sign</span>
             </div>
             <div id="checkin-off" <if condition="$checked">style="display:none;"</if> >
             <strong>
-                <div id="checkinoff">您已签到</div>
+                <div id="checkinoff">You've checked in</div>
             </strong>
             <span id="checkinoff-tag">{$checkedTime}</span>
         </div>
@@ -43,7 +43,7 @@
     </div>
     <div class="xe-label">
         <strong class="num">{$allNode}</strong>
-        <span>共有节点</span>
+        <span>There node</span>
     </div>
 </div>
 
@@ -53,13 +53,13 @@
     <div class="chart-item-bg">
         <div class="chart-label">
             <div class="h3 text-secondary text-bold" data-count="this" data-from="0" data-to="{$useTransfer}" data-suffix="{$useTransferUnit}" data-duration="1">{$useTransfer} {$useTransferUnit}</div>
-            <span class="text-medium text-muted">流量使用情况</span>
+            <span class="text-medium text-muted">Data usage</span>
         </div>
         <div class="progress progress-striped active" style="height: 20px;position: absolute;left:30px;right:30px;top:30%">
             <div class="progress-bar progress-bar-info" style="width: {$pctTransfer}%;height:20px;"></div>
         </div>
-        <div style="position: absolute;left:30px;right:30px;top:40%">共有流量：{$allTransfer}<br/>可用流量：{$slaTransfer}<br/><br/>您的当前IP：<code>{$userIp}</code><br/>您的地区：<code id="country_id">获取中.</code><br/>
-            <h2><a href="support/help" target="_blank">使用教程&gt;&gt;</a></h2>
+        <div style="position: absolute;left:30px;right:30px;top:40%">Total traffic：{$allTransfer}<br/>Available flow: {$slaTransfer}<br/><br/>Your current IP: <code>{$userIp}</code><br/>Your Region:<code id="country_id">Get in.</code><br/>
+            <h2><a href="support/help" target="_blank">Tutorial&gt;&gt;</a></h2>
         </div>
         <div  style="height: 298px;">
 
@@ -70,9 +70,9 @@
     <div class="chart-item-bg">
         <div class="chart-label chart-label-small">
             <div class="h4 text-purple text-bold" data-count="this" data-from="0.00" data-to="{$onlineNum}" data-suffix="%" data-duration="1.5">{$onlineNum}%</div>
-            <span class="text-small text-upper text-muted">在线人数百分比</span><br />
-            <span class="text-small text-upper text-muted">注册用户：<code> {$userCount} </code><br/>签到人数：<code> {$checkCount} </code><br/></span>
-			<span class="text-small text-upper text-muted">实时在线：<code> {$online} </code><br/></span>
+            <span class="text-small text-upper text-muted">Percentage Online</span><br />
+            <span class="text-small text-upper text-muted">registered user：<code> {$userCount} </code><br/>The number of check-ins：<code> {$checkCount} </code><br/></span>
+            <span class="text-small text-upper text-muted">Real-time online：<code> {$online} </code><br/></span>
         </div>
         <div id="server-uptime-chart" style="height: 134px;"></div>
     </div>
@@ -80,8 +80,8 @@
     <div class="chart-item-bg">
         <div class="chart-label chart-label-small">
             <div class="h4 text-secondary text-bold" data-count="this" data-from="0.00" data-to="{$systemTransfer}" data-suffix="GB" data-decimal="." data-duration="2">{$systemTransfer}</div>
-            <span class="text-small text-upper text-muted">{SITE_NAME} 已经产生流量<code>{$systemTransfer}</code>GB</span><br />
-            <span class="text-small text-upper text-muted">{SITE_NAME} 已经有<code>{$useUserCount}</code>人使用</span>
+            <span class="text-small text-upper text-muted">{SITE_NAME} It has generated traffic<code>{$systemTransfer}</code>GB</span><br />
+            <span class="text-small text-upper text-muted">{SITE_NAME} already have<code>{$useUserCount}</code>People use</span>
         </div>
 
         <div id="sales-avg-chart" style="height: 134px; position: relative;">
@@ -103,12 +103,12 @@
                     <if condition="count($globalMessage)>0">
                         <span>{$globalMessage[1]->content}</span><br/>
                     </if>
-                    <!-- 管理员自行修改下载地址和内容 -->
-                    <p>Win客户端：1.<a href="http://h.mloli.com/shadowsocks/Shadowsocks-3.0.zip" target="_blank">SS-CSharp_3.0</a>&nbsp;&nbsp;&nbsp;
+                    <!-- Download and administrators to modify content on their own -->
+                    <p>Win Client：1.<a href="http://h.mloli.com/shadowsocks/Shadowsocks-3.0.zip" target="_blank">SS-CSharp_3.0</a>&nbsp;&nbsp;&nbsp;
                         2.<a href="https://github.com/shadowsocks/shadowsocks-windows/releases/latest" target="_blank">Github</a>
-                        <br>Android客户端：1.<a href="http://h.mloli.com/shadowsocks/SS-Android_2.8.0.apk" target="_blank">SS-Android_2.8.0.apk</a>&nbsp;&nbsp;&nbsp;
+                        <br>Android Client：1.<a href="http://h.mloli.com/shadowsocks/SS-Android_2.8.0.apk" target="_blank">SS-Android_2.8.0.apk</a>&nbsp;&nbsp;&nbsp;
                         2.<a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks" target="_blank">Play Store</a></p>
-                    更多平台客户端请前往 <a href="http://h.mloli.com/shadowsocks/" target="_blank"> [下载中心] </a>
+                    For more platform visit site <a href="http://h.mloli.com/shadowsocks/" target="_blank"> [Download Center] </a>
                 </div>
             </div>
         </div>
@@ -118,13 +118,13 @@
 
         <div class="chart-item-bg">
             <div class="chart-label">
-                <div  class="h1 text-purple text-bold">连接信息</div>
-                端口：<code>{$user->port}</code><br />
-                密码：<div id="showpwd" style="display: inline"><b>点击显示密码</b></div><br />
+                <div  class="h1 text-purple text-bold">Connection information</div>
+                port：<code>{$user->port}</code><br />
+                passwort：<div id="showpwd" style="display: inline"><b>Click to show password</b></div><br />
                 <button class="btn btn-sm btn-info" id="plan-level">{$user->getPlan()}</button>   &nbsp;
-                <button class="btn btn-sm btn-secondary" id="updatePlan"> 升级套餐 </button>   &nbsp;
-                <button class="btn btn-sm btn-secondary" id="planList"> 套餐详情 </button><br /><br />
-                最后使用时间：<code>{$lastOnlineTime}</code>
+                <button class="btn btn-sm btn-secondary" id="updatePlan"> Upgrade Package </button>   &nbsp;
+                <button class="btn btn-sm btn-secondary" id="planList"> Package Details </button><br /><br />
+                Last time: <code>{$lastOnlineTime}</code>
 
             </div>
             <div style="height: 200px"></div>
@@ -142,8 +142,8 @@
         </php>
         $("#checkin").click(function() {
             var chkin = $(this);
-            chkin.text("请稍等");
-            showToastr("正在请求签到..请稍等", 0, 1500);
+            chkin.text("Please wait");
+            showToastr("Requesting sign .. Please wait", 0, 1500);
             var checkInUrl = chkin.attr("href");
             chkin.removeAttr("href").addClass("disabled");
             $.ajax({
@@ -151,10 +151,10 @@
                 url:"/member/checkIn.json",
                 dataType:"json",
                 success:function(result) {
-                    chkin.text("点击签到");
+                    chkin.text("Click to sign in");
                     if(result.code != 200) {
                         chkin.removeClass("disabled").attr("href", checkInUrl);
-                        showToastr(result.message, 0, 3000, '系统错误');
+                        showToastr(result.message, 0, 3000, 'system error');
                         return;
                     }
                     if(result.data.error == 0) {
@@ -166,22 +166,22 @@
                 },
                 error:function(jqXHR) {
                     chkin.removeClass("disabled").attr("href", checkInUrl);
-                    showToastr("出现未知错误，请重试或联系管理员", 0);
+                    showToastr("An unknown error occurred. Please try again or contact your administrator", 0);
                 }
             });
         });
         $("#updatePlan").on('click', function(){
             var btn = $(this);
-            btn.html("请稍等");
+            btn.html("Please wait");
             btn.attr('disabled', 'true').addClass("disabled");
             $.ajax({
                 type:"GET",
                 url:"/member/updatePlan.json",
                 dataType:"json",
                 success:function(result) {
-                    btn.removeAttr('disabled').removeClass("disabled").html("升级套餐");
+                    btn.removeAttr('disabled').removeClass("disabled").html("Upgrade Package");
                     if(result.code != 200) {
-                        showToastr(result.message, 0, 3000, '系统错误');
+                        showToastr(result.message, 0, 3000, 'system error');
                         return;
                     }
                     if(result.data.error == 0) {
@@ -190,16 +190,16 @@
                     showToastr(result.data.message, 0);
                 },
                 error:function(jqXHR) {
-                    btn.removeAttr('disabled').removeClass("disabled").html("升级套餐");
-                    showToastr("发生错误：" + jqXHR.status, 0);
+                    btn.removeAttr('disabled').removeClass("disabled").html("Upgrade Package");
+                    showToastr("An error occurred:" + jqXHR.status, 0);
                 }
             });
         });
         $("#showpwd").on('click', function() {
-            if ($(this).html() == "<b>点击显示密码</b>") {
+            if ($(this).html() == "<b>Click to show password</b>") {
                 $(this).html("{$user->sspwd}");
             } else {
-                $(this).html("<b>点击显示密码</b>");
+                $(this).html("<b>Click to show password</b>");
             }
         });
         <if condition="$globalMessage[3]!=null && $globalMessage[3]->enable==1">
@@ -210,7 +210,7 @@
             <if condition="$globalMessage[2]!=null && $globalMessage[2]->enable==1">
                 $("#modal-1 .modal-body").html("{$globalMessage[2]->content}");
             <else>
-                $("#modal-1 .modal-body").html("管理员未设置内容..");
+                $("#modal-1 .modal-body").html("Administrator is not set Content..");
             </if>
 
             $("#modal-1").modal("show", {backdrop:"fade"});
@@ -238,9 +238,9 @@
                     desc += " " + data.data.isp;
                 }
                 if(desc == "" || desc == undefined)
-                    desc = "未知";
+                    desc = "unknown";
             } else {
-                desc = "未知";
+                desc = "unknown";
             }
 
             $("#country_id").html(desc);
