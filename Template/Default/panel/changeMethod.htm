@@ -3,20 +3,20 @@
 <div class="page-title">
 
     <div class="title-env">
-        <h1 class="title">自定义加密方式</h1>
-        <p class="description">自定义节点加密方式，仅对允许自定义节点有效</p>
+        <h1 class="title">Custom encryption</h1>
+        <p class="description">Custom node encryption, valid only allows custom node</p>
     </div>
 
     <div class="breadcrumb-env">
         <ol class="breadcrumb bc-1">
             <li>
-                <a href="/member"><i class="fa-home"></i>主页</a>
+                <a href="/member"><i class="fa-home"></i>Home</a>
             </li>
             <li>
-                <a href="javascript:;">自定义信息</a>
+                <a href="javascript:;">Custom information</a>
             </li>
             <li class="active">
-                <strong>自定义加密</strong>
+                <strong>Custom encryption</strong>
             </li>
         </ol>
     </div>
@@ -25,15 +25,15 @@
     <div class="col-sm-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-angle-right"></i>&nbsp;修改自定义加密方式
+                <i class="fa fa-angle-right"></i>&nbsp;Edit custom encryption
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <label for="method-old" class="control-label">原加密方式：</label>
+                    <label for="method-old" class="control-label">Original encryption:</label>
                     <input type="text" class="form-control disabled" id="method-old" value="{$user->method}" disabled="disabled">
-                    <label for="method-new" class="control-label">新加密方式：</label>
+                    <label for="method-new" class="control-label">New encryption methods:</label>
                     <select class="form-control" id="method-new" data-value="">
-                        <option value="-1">不使用自定义加密</option>
+                        <option value="-1">Do not use a custom encryption</option>
                         <option value="rc4-md5">rc4-md5</option>
                         <option value="aes-256-cfb">aes-256-cfb</option>
                         <option value="aes-192-cfb">aes-192-cfb</option>
@@ -42,17 +42,17 @@
                     </select>
                 </div>
             </div>
-            <button class="btn btn-info btn-block" id="submit-method">确定修改</button>
+            <button class="btn btn-info btn-block" id="submit-method">OK - Modify</button>
         </div>
     </div>
     <div class="col-sm-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-angle-right"></i>&nbsp;当前支持自定义加密的节点
+                <i class="fa fa-angle-right"></i>&nbsp;Currently supports custom encryption node
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <if condition="count($nodeList)>0"><loop variable="$nodeList" key="$key" value="$node"><i class="fa fa-server" aria-hidden="true"></i> &nbsp; {$node->name}<br/></loop><else>无</if>
+                    <if condition="count($nodeList)>0"><loop variable="$nodeList" key="$key" value="$node"><i class="fa fa-server" aria-hidden="true"></i> &nbsp; {$node->name}<br/></loop><else>No</if>
                 </div>
             </div>
         </div>
@@ -65,14 +65,14 @@
             $("#method-new").val(method);
         } else {
             $("#method-new").val('-1');
-            $("#method-old").val('不使用自定义加密');
+            $("#method-old").val('Do not use a custom encryption');
         }
 
         $("#submit-method").click(function(){
             var but = $(this);
             var method_new = $("#method-new").val();
             if(method_new == null || method_new == '') {
-                showToastr("你不填写就想改真的好吗?", 0, 2000);
+                showToastr("You do not want to fill change really okay?", 0, 2000);
                 return;
             }
             but.attr('disabled', 'true').addClass('disabled');
@@ -89,13 +89,13 @@
                     }
                     showToastr(result.data.message, 0);
                     if($("#method-new").val() == '-1') {
-                        $("#method-old").val('不使用自定义加密');
+                        $("#method-old").val('Do not use a custom encryption');
                     } else {
                         $("#method-old").val($("#method-new").val());
                     }
                 },
                 error:function(jqXHR){
-                    showToastr("发生错误："+jqXHR.status, 0);
+                    showToastr("An error occurred:"+jqXHR.status, 0);
                     but.removeAttr('disabled').removeClass('disabled');
                 }
             })
