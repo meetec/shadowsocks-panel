@@ -57,7 +57,7 @@ class User
                 $user->delete();
             }
             $result['error'] = 0;
-            $result['message'] = '删除账户成功！';
+            $result['message'] = 'Delete Account Success!';
         }
         return $result;
     }
@@ -71,7 +71,7 @@ class User
         if ($_POST['uid'] != null) {
             $us = UserModel::getUserByUserId(trim($_POST['uid']));
             if ($us) {
-                // 手动处理一下流量单位
+                // Manual processing at the traffic unit
                 $us->transfer = $us->transfer / Utils::GB;
                 $us->flow_down = ($us->flow_up + $us->flow_down) / Utils::GB;
                 $us->payTime = date('Y-m-d H:i:s', $us->payTime);
@@ -86,7 +86,7 @@ class User
     }
 
     /**
-     * 设置管理员权限
+     * Setting Administrator Permissions
      * @Admin
      * @Authorization
      * @JSON
@@ -96,15 +96,15 @@ class User
         if (!$_POST['uid']) {
             $user = UserModel::getUserByUserId(intval($_POST['uid']));
             if ($user && !$user->isAdmin()) {
-                $user->setAdmin(); // 设定用户的admin权限。
-                return array('error' => 0, 'message' => '用户：' . $user->nickname . ' 已经成为管理员。');
+                $user->setAdmin(); // Set admin permissions to users.
+                return array('error' => 0, 'message' => 'user: ' . $user->nickname . ' It has become an administrator.');
             }
         }
-        return array('error' => 1, 'message' => '添加管理员失败，可能没有此uid的用户。');
+        return array('error' => 1, 'message' => 'Add Administrator fails, you may not have this user id.');
     }
 
     /**
-     * 修改用户信息
+     * Modify user information
      * @JSON
      */
     public function update()
@@ -141,7 +141,7 @@ class User
                 }
                 if ($_POST['user_enable'] != null) {
                     $us->enable = intval($_POST['user_enable']);
-                } // 是否启用该用户。该字段会强制用户无法链接到所有服务器！
+                } // Whether the user is enabled. This field forces the user can not be linked to all the servers!
                 if ($_POST['user_payTime'] != null) {
                     $us->payTime = strtotime($_POST['user_payTime']);
                 }
@@ -155,7 +155,7 @@ class User
                 if ($us->port != null && $us->port != 0) {
                     $rs = UserModel::checkUserPortIsAvailable($us->port, $us->uid);
                     if ($rs) {
-                        $result = array("error" => 1, "message" => "端口{$rs->port}已被占用，请更换");
+                        $result = array("error" => 1, "message" => "port{$rs->port} is occupied, please replace");
                         return $result;
                     }
                 }
@@ -163,12 +163,12 @@ class User
                     $us->setPassword(trim($_POST['user_password']));
                 }
                 $us->save();
-                if ($_POST['user_isAdmin'] != null) { // 如果选中了管理员，设置管理员的值
+                if ($_POST['user_isAdmin'] != null) { // If you select a value manager, setting administrator
                     $us->setAdmin($_POST['user_isAdmin']);
                 }
 
                 $result['error'] = 0;
-                $result['message'] = '更新信息成功';
+                $result['message'] = 'Updates Success';
                 $us->plan = Utils::planAutoShow($us->plan);
                 $us->transfer = Utils::flowAutoShow($us->transfer);
                 $us->flow_down = ($us->flow_up + $us->flow_down) / Utils::GB;

@@ -23,7 +23,7 @@ class Card
 {
 
     /**
-     * 激活(使用)卡号
+     * Activate (use) the card number
      * @JSON
      */
     public function activation()
@@ -31,7 +31,7 @@ class Card
 
         $user = User::getUserByUserId(User::getCurrent()->uid);
 
-        $result = array('error' => 1, 'message' => '该卡已经被使用或不存在。');
+        $result = array('error' => 1, 'message' => 'The card has been used or does not exist.');
         if ($_POST['actCard'] != null) {
             $actCard = htmlspecialchars(trim($_POST['actCard']));
             $card = Mcard::queryCard($actCard);
@@ -41,11 +41,11 @@ class Card
 
             $custom_transfer_level = json_decode(Option::get('custom_transfer_level'), true);
 
-            /* 0-套餐卡 1-流量卡 2-测试卡 3-余额卡 */
+            /* 0 - package card, 1 - traffic card, 2 - test card, 3 - card balance */
             if ($card->type == 0) {
 
                 if ($user->plan == 'Z' && $user->transfer > ($user->flow_up + $user->flow_down)) {
-                    $result['message'] = '您的流量套餐尚未使用完毕。无法转换到 ' . Utils::planAutoShow($card->info) . ' 套餐';
+                    $result['message'] = 'Your data plan has not been used up. Unable to convert' . Utils::planAutoShow($card->info) . ' package';
                     return $result;
                 }
                 $user->plan = $card->info;
@@ -61,17 +61,17 @@ class Card
                     $cardDay = intval($card->expireTime);
                 }
                 if ($user->expireTime < time()) {
-                    $user->expireTime = time() + (3600 * 24 * $cardDay); // 到期时间
+                    $user->expireTime = time() + (3600 * 24 * $cardDay); // Expire date
                 } else {
-                    $user->expireTime = $user->expireTime + (3600 * 24 * $cardDay); // 到期时间
+                    $user->expireTime = $user->expireTime + (3600 * 24 * $cardDay); // Expire date
                 }
-                $result['message'] = '您的账户已升级到 ' . Utils::planAutoShow($user->plan) . ' ,共有流量 ' . Utils::flowAutoShow($user->transfer) . ', 已用 ' . Utils::flowAutoShow($user->flow_down + $user->flow_up) . ', 到期时间：' . date('Y-m-d H:i:s',
+                $result['message'] = 'Your account has been upgraded to ' . Utils::planAutoShow($user->plan) . ' ,Total traffic ' . Utils::flowAutoShow($user->transfer) . ', used ' . Utils::flowAutoShow($user->flow_down + $user->flow_up) . ', Expire date:' . date('Y-m-d H:i:s',
                         $user->expireTime);
             } elseif ($card->type == 1) {
                 if ($user->plan == 'Z') {
-                    $user->transfer += intval($card->info) * Utils::GB; // 如果之前是 流量 套餐，则递增
+                    $user->transfer += intval($card->info) * Utils::GB; // If before the data plan, is incremented
                 } else {
-                    $user->transfer = intval($card->info) * Utils::GB; // 如果之前是 普通套餐，则清空总流量并设定新流量
+                    $user->transfer = intval($card->info) * Utils::GB; // If before the ordinary course, the total flow will be emptied and set new traffic
                     $user->flow_up = 0;
                     $user->flow_down = 0;
                 }
@@ -80,10 +80,10 @@ class Card
                 } else {
                     $user->enable = 0;
                 }
-                $user->plan = 'Z'; // 强制设定为Z
-                $user->expireTime = strtotime("+1 year"); // 账户可用时间增加一年
-                $result['message'] = '您的账户已经激活固定流量套餐，共有流量' . Utils::flowAutoShow($user->transfer) . ' ,该流量到期时间 ' . date('Y-m-d H:i:s',
-                        $user->expireTime) . ', 感谢您的使用（注意：流量使用完毕前无法通过套餐卡转换为套餐包月用户）';
+                $user->plan = 'Z'; // Forcibly set to Z
+                $user->expireTime = strtotime("+1 year"); // Account the time available additional year
+                $result['message'] = 'Your account has been activated fixed data plan, total flow' . Utils::flowAutoShow($user->transfer) . ' ,the expiration time traffic ' . date('Y-m-d H:i:s',
+                        $user->expireTime) . ', Thank you for your use (Note: Data usage before completion can not be converted by the package card package monthly users)';
 
             } elseif ($card->type == 2) {
 
@@ -91,30 +91,30 @@ class Card
                 $user_test_day = Option::get('user_test_day') ?: 7;
 
                 if ($user->plan != 'A') {
-                    return array('error' => 1, 'message' => '喂喂，你不是测试账户诶? 没办法帮你续命。');
+                    return array('error' => 1, 'message' => 'Hey, you do not test account hey? Continued life can not help you.');
                 }
                 $user->plan = 'A';
                 $user->payTime = time();
                 if ($user->expireTime < time()) {
-                    $user->expireTime = time() + (3600 * 24 * intval($user_test_day)); // 到期时间
+                    $user->expireTime = time() + (3600 * 24 * intval($user_test_day)); // Expire date
                 } else {
-                    $user->expireTime = $user->expireTime + (3600 * 24 * intval($user_test_day)); // 到期时间
+                    $user->expireTime = $user->expireTime + (3600 * 24 * intval($user_test_day)); // Expire date
                 }
                 $user->transfer = Utils::GB * intval($custom_transfer_level[$user->plan]);
                 $user->flow_down = 0;
                 $user->flow_up = 0;
                 $user->enable = 1;
-                $result['message'] = '您的账户已经激活测试套餐，共有流量' . Utils::flowAutoShow($user->transfer) . ' ,到期时间 ' . date('Y-m-d H:i:s',
-                        $user->expireTime) . ', 感谢您的使用';
+                $result['message'] = 'Your account has been activated test packages, total flow' . Utils::flowAutoShow($user->transfer) . ' ,Expire date ' . date('Y-m-d H:i:s',
+                        $user->expireTime) . ', Thank you for using';
             } elseif ($card->type == 3) {
-                // 余额卡
+                // Balance card
                 $user->money += intval($card->info);
                 $user->save();
-                $result['message'] = '余额充值成功，您当前余额为 ' . $user->money . ' 元';
+                $result['message'] = 'Balance successful recharge, your current balance ' . $user->money . ' yuan';
             }
-            $card->destroy(); // 将此卡片禁止
+            $card->destroy(); // This card is prohibited
             $user->save();
-            $_SESSION['currentUser'] = $user; // 将用户信息更新到 session 中.
+            $_SESSION['currentUser'] = $user; // Will update the user information in the session.
 
         }
 
