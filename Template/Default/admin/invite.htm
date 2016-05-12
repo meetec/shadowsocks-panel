@@ -3,13 +3,13 @@
 
 <div class="page-title">
     <div class="title-env">
-        <h1 class="title">邀请码管理</h1>
-        <p class="description">邀请码列表！</p>
+        <h1 class="title">Invitation code management</h1>
+        <p class="description">Invitation code list!</p>
     </div>
     <div class="breadcrumb-env">
         <ol class="breadcrumb bc-1">
-            <li><a href="/admin"><i class="fa-home"></i>管理端</a></li>
-            <li><a href="/admin/invite">邀请码</a></li>
+            <li><a href="/admin"><i class="fa-home"></i>Management side</a></li>
+            <li><a href="/admin/invite">Invitation code</a></li>
         </ol>
     </div>
 </div>
@@ -35,11 +35,11 @@
                                 <tbody>
                                 <tr>
                                     <th>UID</th>
-                                    <th>添加时间</th>
-                                    <th>邀请码</th>
-                                    <th>等级</th>
-                                    <th>状态</th>
-                                    <th width="150px">操作</th>
+                                    <th>add time</th>
+                                    <th>Invitation code</th>
+                                    <th>grade</th>
+                                    <th>status</th>
+                                    <th width="150px">Operation</th>
                                 </tr>
                                 <if condition="count($inviteList) > 0">
                                     <loop variable="$inviteList" key="$key" value="$invite">
@@ -49,22 +49,22 @@
                                             <td> {$invite->invite}</td>
                                             <td>{(\Helper\Utils::planAutoShow($invite->plan))}</td>
                                             <td>
-                                                <if condition="$invite->status == 1">已用
-                                                    <else>未用
+                                                <if condition="$invite->status == 1">used
+                                                    <else>Unused
                                                 </if>
                                             </td>
                                             <td>
                                                 <a class="btn btn-info btn-sm" href="javascript:;"
-                                                   onclick="inviteModify('{$invite->id}');">编辑</a>
+                                                   onclick="inviteModify('{$invite->id}');">edit</a>
                                                 <a class="btn btn-danger btn-sm" href="javascript:;"
-                                                   onclick="inviteRemove('{$invite->id}');">删除</a>
+                                                   onclick="inviteRemove('{$invite->id}');">delete</a>
                                             </td>
                                         </tr>
                                     </loop>
                                     <else>
                                         <tr id="invite-0">
                                             <td>#</td>
-                                            <td colspan="5">没有邀请码</td>
+                                            <td colspan="5">No invitation code</td>
                                         </tr>
                                 </if>
                                 </tbody>
@@ -98,16 +98,16 @@
                                 <div class="input-group">
                                     <span class="input-group-btn" id="selectList">
                                         <button type="button" class="btn dropdown-toggle" id="user-select" data-toggle="dropdown">
-                                            公共邀请码 <span class="caret"></span>
+                                            Public invitation code <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="javascript:;" data-selectid="-1">公共邀请码</a></li>
-                                            <li><a href="javascript:;" data-selectid="{$user->uid}">私有邀请码</a></li>
+                                            <li><a href="javascript:;" data-selectid="-1">Public invitation code</a></li>
+                                            <li><a href="javascript:;" data-selectid="{$user->uid}">Private invitation code</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="javascript:;" data-selectid="0">给指定UID</a></li>
+                                            <li><a href="javascript:;" data-selectid="0">To specify the UID</a></li>
                                         </ul>
                                     </span>
-                                    <input type="text" name="add_uid" id="field-0" value="-1" class="form-control no-left-border form-focus-red" title="邀请码所属用户(默认-1公共,指定UID为私密)" placeholder="邀请码所属用户(默认-1公共)">
+                                    <input type="text" name="add_uid" id="field-0" value="-1" class="form-control no-left-border form-focus-red" title="nvitation code to your user (default -1 public, designated as private UID)" placeholder="Invitation code to your user (default -1 public)">
                                 </div>
                                 <hr/>
                             </div>
@@ -116,10 +116,10 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="field-1" class="control-label">邀请码（只允许系统生成）</label>
+                                    <label for="field-1" class="control-label">Invitation code (only allows the system to generate)</label>
 
                                     <input type="text" class="form-control" name="invite_2" id="field-1" value=""
-                                           readonly placeholder="只允许系统生成">
+                                           readonly placeholder="Only allows the system to generate">
                                 </div>
 
                             </div>
@@ -127,7 +127,7 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="field-2" class="control-label">邀请码类型</label>
+                                    <label for="field-2" class="control-label">Invitation code types</label>
 
                                     <select name="plan" id="plan" id="field-2" class="form-control">
                                         <loop variable="$planList" key="$key" value="$plan">
@@ -143,10 +143,10 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="field-3" class="control-label">有效时间(天)</label>
+                                    <label for="field-3" class="control-label">Effective time (days)</label>
 
                                     <input type="number" class="form-control" name="expiration" id="field-3" value="10"
-                                           placeholder="10" data-message-required="有效时间为整数.">
+                                           placeholder="10" data-message-required="Valid for integer.">
                                 </div>
 
                             </div>
@@ -154,7 +154,7 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="field-4" class="control-label">添加时间</label>
+                                    <label for="field-4" class="control-label">add time</label>
 
                                     <div class="date-and-time">
                                         <input type="text" id="field-4" class="form-control datepicker"
@@ -174,10 +174,10 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="field-5" class="control-label">添加邀请码个数</label>
+                                    <label for="field-5" class="control-label">Add the number of the invitation code</label>
 
                                     <input type="number" class="form-control" name="number" id="field-5" value="1"
-                                           placeholder="1" data-message-required="邀请码个数.">
+                                           placeholder="1" data-message-required="Invite the number of code.">
                                 </div>
 
                             </div>
@@ -185,8 +185,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-                    <button type="submit" class="btn btn-success">立即保存</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Save Now</button>
                 </div>
             </form>
         </div>
@@ -206,11 +206,11 @@
                 'user.transfer': "required"
             },
             messages: {
-                'user.email': "邮箱必须填写",
-                'user.port': "端口必须填写",
-                'user.sspwd': "SS连接密码必须填写",
-                'user.invite_num': "邀请码数量必须填写",
-                'user.transfer': "总流量必须填写"
+                'user.email': "E-mail must be filled",
+                'user.port': "Ports must be filled",
+                'user.sspwd': "SS connection password must be filled",
+                'user.invite_num': "Invite the number of code must be filled",
+                'user.transfer': "The total flow must be filled"
             },
             errorElement: 'span',
             errorClass: 'validate-has-error',
@@ -245,7 +245,7 @@
                     data: $(form).serialize(),
                     success: function(result){
                         if(result.code != 200) {
-                            showToastr(result.message, 0, 3000, '系统错误');
+                            showToastr(result.message, 0, 3000, 'system error');
                             return;
                         }
                         if(result.data.error == 0) {
@@ -256,7 +256,7 @@
 
                     },
                     error: function(Xhr){
-                        showToastr("出现未知错误，请重试", 0);
+                        showToastr("An unknown error occurred, please try again", 0);
                     }
                 });
             }
@@ -270,7 +270,7 @@
             $("#plan").val('A');
             $("input[name='expiration']").val('');
             $("input[name='add_time1']").val('');
-            $('#modal-6 .modal-title').html('新增邀请码');
+            $('#modal-6 .modal-title').html('New invitation code');
             $('#modal-6').modal('show', {backdrop: 'static'});
             reset(true);
             $("#add_select_uid").show();
@@ -291,7 +291,7 @@
             data: {id: inviteId},
             success: function(result){
                 if(result.code != 200){
-                    showToastr(result.message, 0, 3000, '系统错误');
+                    showToastr(result.message, 0, 3000, 'system error');
                     return;
                 }
                 if(result.data.error == 0) {
@@ -300,7 +300,7 @@
                 showToastr(result.data.message, 0);
             },
             error: function(Xhr){
-                showToastr("出现未知错误，请重试或联系管理员", 0);
+                showToastr("An unknown error occurred, please try again", 0);
             }
         });
     }
@@ -315,7 +315,7 @@
             success: function (result) {
                 if(result.code != 200){
                     $('#modal-6').modal('hide');
-                    showToastr(result.message, 0, 3000, '系统错误');
+                    showToastr(result.message, 0, 3000, 'system error');
                     return;
                 }
 
@@ -328,12 +328,12 @@
                     $("input[name='add_time1']").val(invite.dateLine);
                     $("input[name='number']").hide().val('');
                     $(".invite-num").remove();
-                    $('#modal-6 .modal-title').html('修改邀请码');
+                    $('#modal-6 .modal-title').html('Modify invitation code');
                     reset(true);
                 }
             },
             error: function (Xhr) {
-                showToastr("出现未知错误，请重试或联系管理员", 0);
+                showToastr("An unknown error occurred, please try again", 0);
             }
         });
         $('#modal-6').modal('show', {backdrop: 'static'});

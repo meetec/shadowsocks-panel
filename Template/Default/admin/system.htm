@@ -3,13 +3,13 @@
 
 <div class="page-title">
     <div class="title-env">
-        <h1 class="title">系统设置</h1>
-        <p class="description">系统相关设置，部分设置请小心修改。</p>
+        <h1 class="title">System Settings</h1>
+        <p class="description">System related settings, some settings carefully modified.</p>
     </div>
     <div class="breadcrumb-env">
         <ol class="breadcrumb bc-1">
-            <li><a href="/admin"><i class="fa-home"></i>管理端</a></li>
-            <li><a href="/admin/setting">系统设置</a></li>
+            <li><a href="/admin"><i class="fa-home"></i>Management side</a></li>
+            <li><a href="/admin/setting">System Settings</a></li>
         </ol>
     </div>
 </div>
@@ -32,9 +32,9 @@
                             <table cellspacing="0" class="table table-small-font table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>键</th>
-                                        <th>值</th>
-                                        <th width="100px">操作</th>
+                                        <th>Key</th>
+                                        <th>Value</th>
+                                        <th width="100px">Operation</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,14 +44,14 @@
                                             <td>#{$key}</td>
                                             <td><php>if(strlen($option)>60){ echo mb_substr($option,0,60)."...";} else {echo $option;}</php></td>
                                             <td>
-                                                <a class="btn btn-info btn-sm" href="javascript:;" onclick="optionModify('{$key}');">编辑</a>
+                                                <a class="btn btn-info btn-sm" href="javascript:;" onclick="optionModify('{$key}');">edit</a>
                                             </td>
                                         </tr>
                                     </loop>
                                     <else>
                                         <tr id="setting-0">
                                             <td>#</td>
-                                            <td colspan="2">无系统设置参数</td>
+                                            <td colspan="2">No system setup parameters</td>
                                         </tr>
                                 </if>
                                 </tbody>
@@ -84,7 +84,7 @@
                             <div class="col-md-12">
 
                                 <div class="form-group">
-                                    <label for="field-1" class="control-label">键</label>
+                                    <label for="field-1" class="control-label">key</label>
                                     <input type="text" class="form-control disable" disabled="disabled" name="option.k2" id="field-1"
                                            value="" placeholder="option.k">
                                 </div>
@@ -94,7 +94,7 @@
                             <div class="col-md-12">
 
                                 <div class="form-group" id="option-value">
-                                    <label for="field-2" class="control-label" >值</label>
+                                    <label for="field-2" class="control-label" >value</label>
                                     <textarea class="form-control" rows="10" name="option.v" id="field-2" placeholder="option.v"></textarea>
                                     <!--<select name="message.type" id="field-2" class="form-control">-->
                                         <!--<option value="0">正常消息</option>-->
@@ -112,8 +112,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-                    <button type="submit" class="btn btn-success">立即保存</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Save now</button>
                 </div>
             </form>
         </div>
@@ -128,7 +128,7 @@
                 'option.v': "required"
             },
             messages: {
-                'option.v': "不填设置的值别想保存"
+                'option.v': "Do not fill the value set even think about saving"
             },
             errorElement: 'span',
             errorClass: 'validate-has-error',
@@ -163,14 +163,14 @@
                     data: $(form).serialize(),
                     success: function(result){
                         if(result.code != 200) {
-                            showToastr(result.message, 0, 3000, '系统错误');
+                            showToastr(result.message, 0, 3000, 'system error');
                             return;
                         }
                         showToastr(result.data.message, 0);
                         $('#modal-6').modal('hide');
                     },
                     error: function(Xhr){
-                        showToastr("出现未知错误，请重试", 0);
+                        showToastr("An unknown error occurred, please try again", 0);
                     }
                 });
             }
@@ -187,7 +187,7 @@
             data: {'option': optionName},
             success: function(result){
                 if(result.code != 200){
-                    showToastr(result.message, 0, 3000, '系统错误');
+                    showToastr(result.message, 0, 3000, 'system error');
                     return;
                 }
                 if(result.data.error == 0 && result.data.modal != null){
@@ -207,14 +207,14 @@
 
                     $("textarea[name='option.v']").val(option);
 
-                    $('#modal-6 .modal-title').html('修改参数');
+                    $('#modal-6 .modal-title').html('Modify the parameters');
                     reset(true);
                 } else {
                     $('#modal-6').modal('hide');
                 }
             },
             error: function(Xhr){
-                showToastr("出现未知错误，请重试或联系管理员", 0);
+                showToastr("An unknown error occurred. Please try again or contact your administrator", 0);
             }
         });
         $('#modal-6').modal('show', {backdrop: 'static'});
@@ -222,7 +222,7 @@
     function changeTable(data) {
         var tid = $("tr#msg-" + data.id).html();
         if(tid == undefined || tid == null) {
-            /* 新增 */
+            /* New */
             var trCount = $("table tbody").children("tr").length;
             var newData = '<tr id="msg-"'+data.id+'>';
             newData += "<td>#" + data.id + "</td>";
@@ -230,17 +230,17 @@
             newData += "<td>" + data.pushEndTime + "</td>";
             newData += "<td>" + data.pushUsers + "</td>";
             newData += "<td>" + data.type + "</td>";
-            newData += "<td>" + '<a class="btn btn-info btn-sm" href="javascript:;" onclick="messageModify('+data.id+');">编辑</a>' + '<a class="btn btn-danger btn-sm" href="javascript:;" onclick="messageRemove('+data.id+');">删除</a>' + "</td></tr>";
+            newData += "<td>" + '<a class="btn btn-info btn-sm" href="javascript:;" onclick="messageModify('+data.id+');">edit</a>' + '<a class="btn btn-danger btn-sm" href="javascript:;" onclick="messageRemove('+data.id+');">delete</a>' + "</td></tr>";
             $("table tbody").append(newData);
             if($("#node-0").html() != undefined) $("#node-0").remove();
         } else {
-            /* 修改 */
+            /* modify */
             var newData = "<td>#" + data.id + "</td>";
             newData += "<td>"  + data.content + "</td>";
             newData += "<td>" + data.pushEndTime + "</td>";
             newData += "<td>" + data.pushUsers + "</td>";
             newData += "<td>" + data.type + "</td>";
-            newData += "<td>" + '<a class="btn btn-info btn-sm" href="javascript:;" onclick="messageModify('+data.id+');">编辑</a>' + '<a class="btn btn-danger btn-sm" href="javascript:;" onclick="messageRemove('+data.id+');">删除</a>' + "</td>";
+            newData += "<td>" + '<a class="btn btn-info btn-sm" href="javascript:;" onclick="messageModify('+data.id+');">edit</a>' + '<a class="btn btn-danger btn-sm" href="javascript:;" onclick="messageRemove('+data.id+');">delete</a>' + "</td>";
             $("tr#msg-" + data.id).html(newData);
         }
     }

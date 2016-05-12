@@ -3,13 +3,13 @@
 
 <div class="page-title">
     <div class="title-env">
-        <h1 class="title">系统设置</h1>
-        <p class="description">系统相关设置，部分设置请小心修改。</p>
+        <h1 class="title">System Settings</h1>
+        <p class="description">System related settings, some settings carefully modified.</p>
     </div>
     <div class="breadcrumb-env">
         <ol class="breadcrumb bc-1">
-            <li><a href="/admin"><i class="fa fa-home"></i>管理端</a></li>
-            <li><a href="/admin/setting">系统设置</a></li>
+            <li><a href="/admin"><i class="fa fa-home"></i>Management side</a></li>
+            <li><a href="/admin/setting">System Settings</a></li>
         </ol>
     </div>
 </div>
@@ -19,7 +19,7 @@
             <div class="box">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">套餐自定义</h3>
+                        <h3 class="panel-title">Name of Package</h3>
                         <div class="panel-options">
                             <a href="javascript:;" id="setting-save" data-form-id="setting-form">
                                 <i class="fa fa-save"></i>
@@ -35,8 +35,8 @@
                             <table cellspacing="0" class="table table-small-font table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>套餐类型</th>
-                                        <th>对应名称</th>
+                                        <th>Package Type</th>
+                                        <th>Corresponding names</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,7 +60,7 @@
             <div class="box">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">套餐流量</h3>
+                        <h3 class="panel-title">Package flow</h3>
                         <div class="panel-options">
                             <a href="javascript:;" id="transfer-save" data-form-id="transfer-form">
                                 <i class="fa fa-save"></i>
@@ -76,8 +76,8 @@
                             <table cellspacing="0" class="table table-small-font table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>套餐类型</th>
-                                    <th>流量/GB</th>
+                                    <th>Package Type</th>
+                                    <th>Flow / GB</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -101,7 +101,7 @@
             <div class="box">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">其他定义</h3>
+                        <h3 class="panel-title">Other definitions</h3>
                         <div class="panel-options">
                             <a href="javascript:;" id="other-save" data-form-id="other-form">
                                 <i class="fa fa-save"></i>
@@ -118,20 +118,20 @@
                                 <thead>
                                 <tr>
                                     <th width="200px">#</th>
-                                    <th>值</th>
+                                    <th>Value</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>最大值(MB)</td>
+                                        <td>Max (MB)</td>
                                         <td><input class="form-control" name="check_transfer_max" value="{$check_transfer_max}"/></td>
                                     </tr>
                                     <tr>
-                                        <td>最小值(MB)</td>
+                                        <td>Max (MB)</td>
                                         <td><input class="form-control" name="check_transfer_min" value="{$check_transfer_min}"/></td>
                                     </tr>
                                     <tr>
-                                        <td>测试用户试用时长</td>
+                                        <td>User test days</td>
                                         <td><input class="form-control" name="user_test_day" value="{$user_test_day}"/></td>
                                     </tr>
                                 </tbody>
@@ -159,10 +159,10 @@
                 dataType: "json",
                 success: function(result) {
                     if(result.code != 200) {
-                        showToastr(result.message, 0, 3000, '系统错误');
+                        showToastr(result.message, 0, 3000, 'system error');
                         return;
                     }
-                    showToastr(result.data.message, 0, 3000, '提示');
+                    showToastr(result.data.message, 0, 3000, 'note');
                 },
                 error: function(jqXhr) {
 

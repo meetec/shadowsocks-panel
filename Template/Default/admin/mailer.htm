@@ -3,13 +3,13 @@
 
 <div class="page-title">
     <div class="title-env">
-        <h1 class="title">邮件设置</h1>
-        <p class="description">系统的邮件发送方式。</p>
+        <h1 class="title">Mail Settings</h1>
+        <p class="description">Mail system is sent.</p>
     </div>
     <div class="breadcrumb-env">
         <ol class="breadcrumb bc-1">
-            <li><a href="/admin"><i class="fa-home"></i>管理端</a></li>
-            <li><a href="/admin/setting">邮件设置</a></li>
+            <li><a href="/admin"><i class="fa-home"></i>Management side</a></li>
+            <li><a href="/admin/setting">Mail Settings</a></li>
         </ol>
     </div>
 </div>
@@ -32,18 +32,18 @@
                     </div>
                     <div class="panel-body">
                         <form action="" onsubmit="return false;">
-                            <input type="radio" name="mail_type" class="cbr cbr-secondary" value="MailGun" <if condition="$selectMail == 'MailGun'">checked</if>/> MailGun代发系统<br/><br/>
-                            <input type="radio" name="mail_type" class="cbr cbr-secondary" value="Smtp" <if condition="$selectMail == 'Smtp'">checked</if>/> SMTP方式<br/><br/>
+                            <input type="radio" name="mail_type" class="cbr cbr-secondary" value="MailGun" <if condition="$selectMail == 'MailGun'">checked</if>/> MailGun behalf Systems<br/><br/>
+                            <input type="radio" name="mail_type" class="cbr cbr-secondary" value="Smtp" <if condition="$selectMail == 'Smtp'">checked</if>/> SMTP mode<br/><br/>
                             <input type="radio" name="mail_type" class="cbr cbr-secondary disabled" value="CoreSend"
-                                   disabled="disabled" <if condition="$selectMail == 'CoreSend'">checked</if>/> PHP内置邮件发送函数<br/><br/>
+                                   disabled="disabled" <if condition="$selectMail == 'CoreSend'">checked</if>/> Send e-mail function built-in PHP<br/><br/>
                             <input type="radio" name="mail_type" class="cbr cbr-secondary disabled" value="CAT_API"
-                                   disabled="disabled" <if condition="$selectMail == 'CAT_API'">checked</if>/> SS Cat提供的邮件投递API(发送者显示：SS Cat&lt;post@sscat.it&gt;)<br/>
+                                   disabled="disabled" <if condition="$selectMail == 'CAT_API'">checked</if>/> Mail delivery provided by the API SS Cat (sender display:SS Cat&lt;post@sscat.it&gt;)<br/>
                             <br/>
                             <br/>
-                            <button type="button" class="btn btn-success" id="save-setting">立即保存</button>
-                            <button type="button" class="btn btn-success" id="mail-test">邮件发送测试</button>
+                            <button type="button" class="btn btn-success" id="save-setting">Save Now</button>
+                            <button type="button" class="btn btn-success" id="mail-test">Send a test message</button>
                             &nbsp;&nbsp;
-                            <button type="button" class="btn btn-success" id="mail-reset">重置邮件配置项</button>
+                            <button type="button" class="btn btn-success" id="mail-reset">Reset message configuration items</button>
                         </form>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="field-1" class="control-label">键</label>
+                                    <label for="field-1" class="control-label">key</label>
                                     <input type="text" class="form-control disable" disabled="disabled" name="option.k2" id="field-1" value="" placeholder="option.k">
                                 </div>
                             </div>
@@ -80,8 +80,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-                    <button type="submit" class="btn btn-success">立即保存</button>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Save now</button>
                 </div>
             </form>
         </div>
@@ -121,14 +121,14 @@
                     data: $(form).serialize(),
                     success: function (result) {
                         if (result.code != 200) {
-                            showToastr(result.message, 0, 3000, '系统错误');
+                            showToastr(result.message, 0, 3000, 'system error');
                             return;
                         }
                         showToastr(result.data.message, 0);
                         $('#modal-6').modal('hide');
                     },
                     error: function (Xhr) {
-                        showToastr("出现未知错误，请重试", 0);
+                        showToastr("An unknown error occurred, please try again", 0);
                     }
                 });
             }
@@ -142,17 +142,17 @@
                 data: {'mail_type': $("input[name='mail_type']:checked").val()},
                 success: function (result) {
                     if (result.code != 200) {
-                        showToastr(result.message, 0, 3000, '系统错误');
+                        showToastr(result.message, 0, 3000, 'system error');
                         return;
                     }
                     $(".modal-body .row").empty();
-                    $('#modal-6 .modal-title').html('邮件系统 ' + result.data.mailer + " 设置");
+                    $('#modal-6 .modal-title').html('Mail System ' + result.data.mailer + " set up");
                     if (result.data.configs != null) {
                         var jsonObj = result.data.configs;
-                        /*遍历Json串获取其属性*/
+                        /*Traversal Json string whose properties*/
                         for (var item in jsonObj) {
                             var obj = jsonObj[item];
-                            var strVar = "<div class=\"col-md-12\"><div class=\"form-group\"><label for=\"field-"+item+"\" class=\"control-label\">配置项："+obj.key+"<\/label><input type=\"text\" class=\"form-control\" name=\"mail_"+obj.key+"\" id=\"field-"+item+"\" value=\""+obj.value+"\" placeholder=\""+obj.value+"\"><\/div><\/div>";
+                            var strVar = "<div class=\"col-md-12\"><div class=\"form-group\"><label for=\"field-"+item+"\" class=\"control-label\">Configuration item: "+obj.key+"<\/label><input type=\"text\" class=\"form-control\" name=\"mail_"+obj.key+"\" id=\"field-"+item+"\" value=\""+obj.value+"\" placeholder=\""+obj.value+"\"><\/div><\/div>";
                             $(".modal-body .row").append(strVar);
                             console.log("key: " + obj.key + ", value: " + obj.value);
                         }
@@ -170,22 +170,22 @@
         });
         $("#mail-test").on('click', function() {
             var btn = this;
-            $(btn).html("请求发送中，请稍等").attr('disabled', true);
+            $(btn).html("Request, please wait").attr('disabled', true);
             $.ajax({
                 url: "admin/mailer/test.json",
                 method: "GET",
                 dataType: "json",
                 success: function(result) {
                     if (result.code != 200) {
-                        $(btn).html("邮件发送测试").attr('disabled', false);
-                        showToastr(result.message, 0, 3000, '系统错误');
+                        $(btn).html("Send a test message").attr('disabled', false);
+                        showToastr(result.message, 0, 3000, 'system error');
                         return;
                     }
-                    $(btn).html("邮件发送测试").attr('disabled', false);
+                    $(btn).html("Send a test message").attr('disabled', false);
                     showToastr(result.data.message, 0);
                 },
                 error: function(jqXhr) {
-                    $(btn).html("邮件发送测试").attr('disabled', false);
+                    $(btn).html("Send a test message").attr('disabled', false);
                 }
             });
         });
@@ -197,13 +197,13 @@
                 data: {'mail_type': $("input[name='mail_type']:checked").val()},
                 success: function(result) {
                     if (result.code != 200) {
-                        showToastr(result.message, 0, 3000, '系统错误');
+                        showToastr(result.message, 0, 3000, 'system eroor');
                         return;
                     }
                     showToastr(result.data.message, 0);
                 },
                 error: function(jqXhr) {
-                    showToastr("请求服务器错误", 0);
+                    showToastr("Request Server Error", 0);
                 }
             });
         });
@@ -218,7 +218,7 @@
             data: {'option': optionName},
             success: function (result) {
                 if (result.code != 200) {
-                    showToastr(result.message, 0, 3000, '系统错误');
+                    showToastr(result.message, 0, 3000, 'system error');
                     return;
                 }
                 if (result.data.error == 0 && result.data.modal != null) {
@@ -228,7 +228,7 @@
                     /* TODO 如果为键值对配置，则自动构建一个K:V对应编辑 */
                     /*
                      if(result.data.isArray) {
-                     var newHtml = '<label for="field-2" class="control-label" >值</label>';
+                     var newHtml = '<label for="field-2" class="control-label" >value</label>';
                      newHtml += '<input'
 
                      $("#option-value").html();
@@ -238,14 +238,14 @@
 
                     $("textarea[name='option.v']").val(option);
 
-                    $('#modal-6 .modal-title').html('修改参数');
+                    $('#modal-6 .modal-title').html('Modify the parameters');
                     reset(true);
                 } else {
                     $('#modal-6').modal('hide');
                 }
             },
             error: function (Xhr) {
-                showToastr("出现未知错误，请重试或联系管理员", 0);
+                showToastr("An unknown error occurred. Please try again or contact your administrator", 0);
             }
         });
         $('#modal-6').modal('show', {backdrop: 'static'});

@@ -3,11 +3,11 @@
 
 <div class="page-title">
     <div class="title-env">
-        <h1 class="title">计划任务</h1>
-        <p class="description">这里只能查看<code>计划任务</code>的运行情况，并不能做任何调整</p>
+        <h1 class="title">Scheduled Tasks</h1>
+        <p class="description">Here you can only view<code>Scheduled Tasks</code> here you can not do any adjustments</p>
     </div>
     <div class="breadcrumb-env">
-        <ol class="breadcrumb bc-1"><li><a href="/admin"><i class="fa-home"></i>管理端</a></li><li><a href="/admin/cron">计划任务</a></li></ol>
+        <ol class="breadcrumb bc-1"><li><a href="/admin"><i class="fa-home"></i>Management side</a></li><li><a href="/admin/cron">Scheduled Tasks</a></li></ol>
     </div>
 </div>
 <section class="content">
@@ -30,11 +30,11 @@
                                     <table cellspacing="0" class="table table-small-font table-bordered table-striped">
                                 <tbody>
                                 <tr>
-                                    <th>任务</th>
-                                    <th>说明</th>
-                                    <th>下次运行时间</th>
-                                    <th>状态</th>
-                                    <th>优先级</th>
+                                    <th>Task</th>
+                                    <th>Explanation</th>
+                                    <th>Next Run Time</th>
+                                    <th>Status</th>
+                                    <th>Priority</th>
                                 </tr>
                                 <if condition="count($cronList) > 0">
                                 <loop variable="$cronList" key="$key" value="$cron">
@@ -49,7 +49,7 @@
                                 <else>
                                 <tr>
                                     <td>#</td>
-                                    <td colspan="5">未找到计划任务</td>
+                                    <td colspan="5">Scheduled Tasks Not Found</td>
                                 </tr>
                                 </if>
                                 </tbody>
