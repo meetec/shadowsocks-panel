@@ -9,12 +9,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">提示</h4>
+                <h4 class="modal-title">Note</h4>
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-info" data-dismiss="modal">确定</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>
@@ -39,10 +39,10 @@
                             <!-- Available statuses: is-online, is-idle, is-busy and is-offline -->
                             <span class="user-status is-online"></span>
                         </h3>
-                        <p class="user-title">加入时间：{(date('Y-m-d H:i:s', $user->regDateLine))}</p>
+                        <p class="user-title">Joined: {(date('Y-m-d H:i:s', $user->regDateLine))}</p>
                         <div class="user-links">
-                            <a href="/member/info" class="btn btn-primary">个人资料</a>
-                            <a href="/auth/logout" class="btn btn-success">退出</a>
+                            <a href="/member/info" class="btn btn-primary">View profile</a>
+                            <a href="/auth/logout" class="btn btn-success">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -51,32 +51,32 @@
                 <div class="links-block left-sep">
                     <h4>
                         <a href="javascript:;">
-                            <span>帮助</span>
+                            <span>Help</span>
                         </a>
                     </h4>
                     <ul class="list-unstyled">
                         <li>
                             <a href="Support/Tos">
                                 <i class="fa-angle-right"></i>
-                                支持中心
+                                Support Center
                             </a>
                         </li>
                         <li>
                             <a href="/member/feedback">
                                 <i class="fa-angle-right"></i>
-                                提交问题
+                                Submit a question
                             </a>
                         </li>
                         <li>
                             <a href="Support/Tos">
                                 <i class="fa-angle-right"></i>
-                                使用协议
+                                Use Agreement
                             </a>
                         </li>
                         <li>
                             <a href="Support/Tos">
                                 <i class="fa-angle-right"></i>
-                                服务条款
+                                Terms of Service
                             </a>
                         </li>
                     </ul>
@@ -117,56 +117,56 @@
                 <li class="{(\Helper\Utils::menuActive('member', 'opened'))}">
                 <a href="/member" class="pjax">
                     <i class="fa fa-desktop"></i>
-                    <span class="title">仪表盘</span>
+                    <span class="title">Dashboard</span>
                 </a>
                 </li>
                 <li class="{(\Helper\Utils::menuActive('node'))}">
                     <a href="/member/node" class="pjax">
                         <i class="fa fa-server"></i>
-                        <span class="title">节点列表</span>
+                        <span class="title">Node Manager</span>
                         <span class="label label-success pull-right">{$openNode}/{$allNode}</span>
                     </a>
                 </li>
                 <li class="{(\Helper\Utils::menuActive('info'))}">
                     <a href="/member/info" class="pjax">
                         <i class="fa fa-user"></i>
-                        <span class="title">个人资料</span>
+                        <span class="title">Profile</span>
                     </a>
                 </li>
                 <li class="{(\Helper\Utils::menuActive('Change|actCard', ' opened expanded'))} has-sub">
                     <a href="javascript:;">
                         <i class="fa fa-pencil"></i>
-                        <span class="title">资料修改</span>
+                        <span class="title">Modify profile</span>
                     </a>
                     <ul>
                         <li class="{(\Helper\Utils::menuActive('ChangePassword'))}">
                             <a href="/member/changePassword" class="pjax">
-                                <span class="title">密码修改</span>
+                                <span class="title">Change Password</span>
                             </a>
                         </li>
                         <li class="{(\Helper\Utils::menuActive('ChangeNickname'))}">
                             <a href="/member/changeNickname" class="pjax">
-                                <span class="title">昵称修改</span>
+                                <span class="title">Modify nickname</span>
                             </a>
                         </li>
                         <li>
-                            <a href="https://cn.gravatar.com/" target="_blank" title="Gravatar 全球通用头像">
-                                <span class="title">修改头像</span>
+                            <a href="https://cn.gravatar.com/" target="_blank" title="Gravatar - Universal avatar">
+                                <span class="title">Modify avatar</span>
                             </a>
                         </li>
                         <li class="{(\Helper\Utils::menuActive('ChangePlan'))}">
                             <a href="/member/changePlan" class="pjax">
-                                <span class="title">续费升级</span>
+                                <span class="title">Change Plan</span>
                             </a>
                         </li>
                         <li class="{(\Helper\Utils::menuActive('actCard'))}">
                             <a href="/member/actCard" class="pjax">
-                                <span class="title">卡号充值</span>
+                                <span class="title">Recharge card number</span>
                             </a>
                         </li>
                         <li class="{(\Helper\Utils::menuActive('ChangeMethod'))}">
                             <a href="/member/changeMethod" class="pjax">
-                                <span class="title">自定义节点加密</span>
+                                <span class="title">Custom Node Encryption</span>
                             </a>
                         </li>
                     </ul>
@@ -174,13 +174,13 @@
                 <li class="{(\Helper\Utils::menuActive('invite'))}">
                     <a href="/member/invite" class="pjax">
                         <i class="fa fa-heart"></i>
-                        <span class="title">邀请好友</span>
+                        <span class="title">Invite Friends</span>
                     </a>
                 </li>
                 <li class="{(\Helper\Utils::menuActive('order|support', ' opened expanded'))} has-sub">
                     <a href="javascript:;">
                         <i class="fa fa-paper-plane"></i>
-                        <span class="title">服务支持</span>
+                        <span class="title">Service Support</span>
                     </a>
                     <ul>
                         <!-- not support
@@ -199,7 +199,7 @@
                         -->
                         <li><a href="/support/tos">
                             <i class="fa fa-paper-plane-o"></i>
-                            <span class="title">关于{SITE_NAME}</span>
+                            <span class="title">TOS {SITE_NAME}</span>
                         </a>
                         </li>
                     </ul>
@@ -208,7 +208,7 @@
                 <li>
                     <a href="/admin">
                         <i class="fa fa-cogs"></i>
-                        <span class="title">管理员后台</span>
+                        <span class="title">Administrator background</span>
                     </a>
                 </li>
                 </if>

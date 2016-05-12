@@ -3,11 +3,11 @@
 <style>.btn + .btn {margin-left: 0;}</style>
 <div class="page-title">
     <div class="title-env">
-        <h1 class="title">节点列表</h1>
-        <p class="description">请勿在任何地方公开节点地址！</p>
+        <h1 class="title">Node List</h1>
+        <p class="description">Do not open any node address in place!</p>
     </div>
     <div class="breadcrumb-env">
-        <ol class="breadcrumb bc-1"><li><a href="/member"><i class="fa-home"></i>主页</a></li><li><a href="javascript:;">节点列表</a></li><li class="active"><strong>节点信息</strong></li></ol>
+        <ol class="breadcrumb bc-1"><li><a href="/member"><i class="fa-home"></i>Home</a></li><li><a href="javascript:;">Node List</a></li><li class="active"><strong>Node Information</strong></li></ol>
     </div>
 </div>
 <div class="row">
@@ -19,11 +19,11 @@
                 <i class="fa fa-angle-right"></i> {$node->name}
                 <div class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        操作 <span class="caret"></span>
+                        Option <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/Json?id={$node->id}">配置文件</a></li>
-                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/QRCode?id={$node->id}">二维码</a></li>
+                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/Json?id={$node->id}">Profiles</a></li>
+                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/QRCode?id={$node->id}">QR code</a></li>
                     </ul>
                 </div>
             </div>
@@ -47,15 +47,15 @@
     <div class="col-sm-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-code"></i> Pro节点 - {$node->name}
+                <i class="fa fa-code"></i> Pro node - {$node->name}
                 <div class="dropdown">
 
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        操作 <span class="caret"></span>
+                        Option <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/Json?id={$node->id}">配置文件</a></li>
-                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/QRCode?id={$node->id}">二维码</a></li>
+                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/Json?id={$node->id}">Profiles</a></li>
+                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/QRCode?id={$node->id}">QR code</a></li>
                     </ul>
                 </div>
             </div>
@@ -76,13 +76,13 @@
     <div class="col-sm-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-code"></i> Pro节点 - {$node->name}
+                <i class="fa fa-code"></i> Pro node - {$node->name}
                 <div class="dropdown"></div>
             </div>
             <div class="panel-body">
-                <button class="btn btn-orange">无权使用</button>
+                <button class="btn btn-orange">Right to use</button>
                 <br>
-                <p>{$node->info} *非VIP以上不能使用</p>
+                <p>{$node->info} *You can't use more than the non-VIP</p>
             </div>
         </div>
     </div>

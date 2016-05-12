@@ -3,17 +3,17 @@
 <div class="page-title">
 
     <div class="title-env">
-        <h1 class="title">邀请码</h1>
-        <p class="description"><if condition="$user->invite_num == 0">查看自己的邀请码<else>当前您可以生成<code id="invitec_num2">{$user->invite_num}</code>个邀请码。</if></p>
+        <h1 class="title">Invitation code</h1>
+        <p class="description"><if condition="$user->invite_num == 0">Your invitation code list<else>You can generate current<code id="invitec_num2">{$user->invite_num}</code>An invitation code.</if></p>
     </div>
 
     <div class="breadcrumb-env">
         <ol class="breadcrumb bc-1">
             <li>
-                <a href="/member"><i class="fa-home"></i>主页</a>
+                <a href="/member"><i class="fa-home"></i>Home</a>
             </li>
             <li class="active">
-                <strong>邀请码</strong>
+                <strong>Invitation code</strong>
             </li>
         </ol>
     </div>
@@ -23,7 +23,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
             <h3 class="panel-title">
-                <a class="btn btn-danger btn-sm invitec<if condition="$user->invite_num <= 0"> hidden</if>" href="javascript:;" style="color:#FFF;">生成邀请码(余 <span id="invitec_num">{$user->invite_num}</span> 次)</a>&nbsp;<a class="btn btn-danger btn-sm inviteFlow" href="javascript:;" style="color:#FFF;">用流量购买邀请码生成次数</a>
+                <a class="btn btn-danger btn-sm invitec<if condition="$user->invite_num <= 0"> hidden</if>" href="javascript:;" style="color:#FFF;">Generate ivitation code (More than <span id="invitec_num">{$user->invite_num}</span> times)</a>&nbsp;<a class="btn btn-danger btn-sm inviteFlow" href="javascript:;" style="color:#FFF;">Purchase invitation code with 10GB of your traffic</a>
             </h3>
     </div>
     <div class="panel-body">
@@ -32,8 +32,8 @@
             <thead>
             <tr>
                 <th>###</th>
-                <th >邀请码</th>
-                <th >状态</th>
+                <th >Invitation code</th>
+                <th >status</th>
             </tr>
             </thead>
             <tbody id="data-tbody">
@@ -49,16 +49,16 @@
                 </td>
                 <td>
                     <if condition="$invite->status == 0">
-                        <a href="javascript:;" class="btn btn-sm btn-secondary" data-set-skin="">可用</a>
+                        <a href="javascript:;" class="btn btn-sm btn-secondary" data-set-skin="">Available</a>
                     <else>
-                        <a href="javascript:;" class="btn btn-sm btn-red" data-set-skin="">已用</a>
+                        <a href="javascript:;" class="btn btn-sm btn-red" data-set-skin="">used</a>
                     </if>
                 </td>
             </tr>
             </loop>
             <else>
             <tr>
-                <td colspan="3" align="center">您没有可用的邀请码</td>
+                <td colspan="3" align="center">Your invitation code is not available</td>
             </tr>
 
             </tbody>
@@ -66,24 +66,24 @@
         </table>
 
         <hr>
-        <h4>注意！</h4>
-        <p>邀请码请给认识的需要的人。<br />邀请码使用流量购买 1个/10GB,请不要浪费<br />邀请有记录，若被邀请的人违反用户协议，您将会有连带责任。</p>
+        <h4>NOTE!</h4>
+        <p>Please generate invitation code only if you need it.<br />To make invitation code we are using your 10GB traffic, please do not waste your traffic if you don't need code<br />You invite is recorded user agreement if they are invited in violation, you will have joint and several liability.</p>
         <br>
-        <pre>邀请码这种东西，若无力生成,请找管理员索要吧。</pre>
+        <pre>If you have problem to invite someone or to generate code, please ask an administrator to ask for it.</pre>
 
     </div>
 </div>
 <script>
     $(document).ready(function(){
         $(".invitec").click(function(){
-            showToastr("生成邀请码中..", 0, 2000);
+            showToastr("Invitation code generation..", 0, 2000);
             $.ajax({
                 type:"GET",
                 url:"/invite/create.json",
                 dataType:"json",
                 success:function(result){
                     if(result.code != 200) {
-                        showToastr(result.message, 0, 5000, '系统错误');
+                        showToastr(result.message, 0, 5000, 'system error');
                         return;
                     }
                     var data = result.data;
@@ -95,28 +95,28 @@
 
                         if(data.invite != null) {
 
-                            $("#data-tbody").append('<tr><td>'+ $("#data-tbody").children("tr").length +'</td><td>'+data.invite.invite+'</td><td><a href="javascript:;" class="btn btn-sm btn-secondary" data-set-skin="">可用</a></td></tr>');
+                            $("#data-tbody").append('<tr><td>'+ $("#data-tbody").children("tr").length +'</td><td>'+data.invite.invite+'</td><td><a href="javascript:;" class="btn btn-sm btn-secondary" data-set-skin="">Available</a></td></tr>');
                         }
 
                     } else {
-                        showToastr(data.message, 0, 5000, '错误');
+                        showToastr(data.message, 0, 5000, 'error');
                     }
 
                 },
                 error:function(jqXHR){
-                    showToastr("发生错误："+jqXHR.status, 0);
+                    showToastr("An error occurred:"+jqXHR.status, 0);
                 }
             })
         });
         $('.inviteFlow').click(function(){
-            showToastr("正在校验信息..", 0, 1500);
+            showToastr("Verifying information..", 0, 1500);
             $.ajax({
                 type:"GET",
                 url:"/invite/buy.json",
                 dataType:"json",
                 success:function(result){
                     if(result.code != 200) {
-                        showToastr(result.message, 0, 5000, '系统错误');
+                        showToastr(result.message, 0, 5000, 'system error');
                         return;
                     }
                     if(result.data.error == 0) {
@@ -125,11 +125,11 @@
                         $("#invitec_num").html(result.data.invite_num);
                         $("#invitec_num2").html(result.data.invite_num);
                     } else {
-                        showToastr(result.data.message, 0, 5000, '错误');
+                        showToastr(result.data.message, 0, 5000, 'error');
                     }
                 },
                 error:function(jqXHR){
-                    showToastr("发生错误："+jqXHR.status, 0);
+                    showToastr("An error occurred:"+jqXHR.status, 0);
                 }
             })
         });

@@ -3,20 +3,20 @@
 <div class="page-title">
 
     <div class="title-env">
-        <h1 class="title">用户中心</h1>
-        <p class="description">个人资料，用户信息等..</p>
+        <h1 class="title">User Center</h1>
+        <p class="description">Personal information, user information, etc...</p>
     </div>
 
     <div class="breadcrumb-env">
         <ol class="breadcrumb bc-1">
             <li>
-                <a href="/member"><i class="fa-home"></i>主页</a>
+                <a href="/member"><i class="fa-home"></i>Home</a>
             </li>
             <li>
-                <a href="javascript:;">用户中心</a>
+                <a href="javascript:;">User Center</a>
             </li>
             <li class="active">
-                <strong>个人资料</strong>
+                <strong>Profile</strong>
             </li>
         </ol>
     </div>
@@ -29,15 +29,15 @@
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <p>用户名：{$user->nickname}</p>
-                    <p>邮箱：{$user->email}</p>
-                    <p>套餐：<span class="label label-info">{$user->getPlan()}</span>
+                    <p>Username: {$user->nickname}</p>
+                    <p>Mailbox: {$user->email}</p>
+                    <p>Package: <span class="label label-info">{$user->getPlan()}</span>
                         <if condition="$user->plan == 'A'">
-                            &nbsp;&nbsp;您为免费体验账户，流量将不会每月重置，升级到会员账户即可提升流量限额。
+                            &nbsp;&nbsp;You are free to experience account, the traffic will not be reset every month, you can upgrade to the Member's account quota increase traffic.
                         </if>
                     </p>
-                    <p>账户余额：{$user->money} 元 </p>
-                    <p><button class="btn btn-danger btn-sm" id="deleteMe">删除我的账户</button></p>
+                    <p>Account Balance: {$user->money} yuan </p>
+                    <p><button class="btn btn-danger btn-sm" id="deleteMe">Delete my account</button></p>
                     <div class="form-block">
                         <input type="checkbox" checked class="iswitch">
                     </div>
@@ -48,7 +48,7 @@
 </div>
 <script type="text/javascript">
     $("#deleteMe").on('click', function(){
-        var flag = confirm("真的要删除吗？此操作一去不复返哦~");
+        var flag = confirm("Really you want to delete it? This operation gone oh ~");
         if(flag) {
             $(".main-content").fadeTo('slow',0.6);
             $.ajax({
@@ -58,19 +58,19 @@
                 dataType: "json",
                 success: function(result) {
                     if(result.code != 200) {
-                        showToastr(result.message, 0, '系统错误');
+                        showToastr(result.message, 0, 'system error');
                         return;
                     }
                     if(result.data.error == 0) {
                         showToastr(result.data.message, 0);
                         setTimeout('window.location.href="/auth/login#login"', 3000);
                     } else {
-                        showToastr('不好意思，服务端妹纸好像舍不得你，不然你在试一次？（删除失败）', 0);
+                        showToastr('Sorry, the server sister paper seems reluctant to you, or you try again? (failed to delete)', 0);
                         $(".main-content").fadeTo('slow', 1);
                     }
                 },
                 error: function(Xhr) {
-                    showToastr('请求服务器失败', 0);
+                    showToastr('Requests the server fails', 0);
                     $(".main-content").fadeTo('slow', 1);
                 }
             });
