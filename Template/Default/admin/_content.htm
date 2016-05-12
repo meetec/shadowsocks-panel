@@ -17,8 +17,8 @@
                 <ul class="dropdown-menu notifications">
                     <li class="top">
                         <p class="small">
-                            <a href="javascript:;" class="pull-right">全部标记已读</a>
-                            你有 <strong>{$messageCount}</strong> 条新的消息.
+                            <a href="javascript:;" class="pull-right">Mark All Read</a>
+                            You have <strong>{$messageCount}</strong> new messages.
                         </p>
                     </li>
 
@@ -31,9 +31,9 @@
                                         <a href="javascript:;">
                                             <i class="fa-user"></i>
                                             <!-- fa-lock -->
-											<span class="line">
-												<strong>{$message->content}</strong>
-											</span>
+                                            <span class="line">
+                                                <strong>{$message->content}</strong>
+                                            </span>
                                             <span class="line small time">{(date("Y-m-d H:i:s", $message->pushTime))}</span>
                                         </a>
                                     </li>
@@ -45,7 +45,7 @@
                                             <i class="fa-user"></i>
                                             <!-- fa-lock -->
                                         <span class="line">
-                                            <strong>无新消息</strong>
+                                            <strong>No new messages</strong>
                                         </span>
                                             <span class="line small time">{(date("Y-m-d H:i:s", time()))}</span>
                                         </a>
@@ -56,7 +56,7 @@
                     </li>
                     <li class="external">
                         <a href="javascript:;">
-                            <span>查看所有消息</span>
+                            <span>View all news</span>
                             <i class="fa-link-ext"></i>
                         </a>
                     </li>
@@ -78,29 +78,29 @@
                     <li>
                         <a href="/member/info">
                             <i class="fa-user"></i>
-                            个人资料
+                            View Profile
                         </a>
                     </li>
                     <li>
                         <a href="/member/changePassword">
                             <i class="fa-wrench"></i>
-                            设置
+                            Change Password
                         </a>
                     </li>
                     <li>
                         <a href="/support/help">
                             <i class="fa-info"></i>
-                            帮助
+                            Help
                         </a>
                     </li>
                     <li class="last">
                         <a href="/auth/logout">
                             <i class="fa-lock"></i>
-                            登出管理端
+                            Logout
                         </a>
                     </li>
                 </ul>
             </li>
         </ul>
     </nav>
-    <script type="text/javascript">function showToastr(messages,waitime,timeOut, title){if(timeOut==null||timeOut==0||timeOut=="")timeOut="5000";setTimeout(function(){var opts={"closeButton":true,"debug":false,"positionClass":"toast-top-right toast-default","toastClass":"black","onclick":null,"showDuration":"100","hideDuration":"1000","timeOut":timeOut,"extendedTimeOut":"1000","showEasing":"swing","hideEasing":"linear","showMethod":"fadeIn","hideMethod":"fadeOut"};toastr.info(messages, title==undefined?'系统提示':title,opts);},waitime);}</script>
+    <script type="text/javascript">function showToastr(messages,waitime,timeOut, title){if(timeOut==null||timeOut==0||timeOut=="")timeOut="5000";setTimeout(function(){var opts={"closeButton":true,"debug":false,"positionClass":"toast-top-right toast-default","toastClass":"black","onclick":null,"showDuration":"100","hideDuration":"1000","timeOut":timeOut,"extendedTimeOut":"1000","showEasing":"swing","hideEasing":"linear","showMethod":"fadeIn","hideMethod":"fadeOut"};toastr.info(messages, title==undefined?'system hint':title,opts);},waitime);}</script>
