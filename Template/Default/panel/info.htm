@@ -29,15 +29,9 @@
             </div>
             <div class="panel-body">
                 <div class="form-group">
-<<<<<<< HEAD
                     <p>Username: {$user->nickname}</p>
-                    <p>Mailbox: {$user->email}</p>
+                    <p>Mailbox: {$user->email}&nbsp;<if condition="$is_verification">&nbsp;&nbsp; You e-mail is not verified（<a href="javascript:;" id="resend_verification">Resend verification code</a>）<else>(The Email Address Verified)</if></p>
                     <p>Package: <span class="label label-info">{$user->getPlan()}</span>
-=======
-                    <p>用户名：{$user->nickname}</p>
-                    <p>邮箱：{$user->email}&nbsp;<if condition="$is_verification">&nbsp;&nbsp;您还没有校验邮箱地址！（<a href="javascript:;" id="resend_verification">重新发送校验码</a>）<else>(该邮箱地址已校验)</if></p>
-                    <p>套餐：<span class="label label-info">{$user->getPlan()}</span>
->>>>>>> sendya/master
                         <if condition="$user->plan == 'A'">
                             &nbsp;&nbsp;You are free to experience account, the traffic will not be reset every month, you can upgrade to the Member's account quota increase traffic.
                         </if>
@@ -84,7 +78,7 @@
     });
     $("#resend_verification").on('click', function(){
         var but = $(this);
-        but.attr("disabled", "disabled").html("60秒才能发送一次");
+        but.attr("disabled", "disabled").html("60 seconds to send");
         $.ajax({
             url: "/auth/resend.json",
             type: "POST",
@@ -92,18 +86,18 @@
             dataType: "json",
             success: function(result) {
                 if(result.code != 200) {
-                    showToastr(result.message, 0, '系统错误');
+                    showToastr(result.message, 0, 'system error');
                     return;
                 }
                 if(result.data.error == 0) {
                     showToastr(result.data.message, 0);
-                    setTimeout('but.removeAttr("disabled").html("重新发送校验码");', 55000);
+                    setTimeout('but.removeAttr("disabled").html("Resend verification code");', 55000);
                 } else {
-                    showToastr('发送邮件失败', 0);
+                    showToastr('Failure sending mail', 0);
                 }
             },
             error: function(Xhr) {
-                showToastr('请求服务器失败', 0);
+                showToastr('Requests the server fails', 0);
                 $(".main-content").fadeTo('slow', 1);
             }
         });
