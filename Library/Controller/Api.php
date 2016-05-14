@@ -16,7 +16,7 @@ class Api
 {
 
     /**
-     * 查询 IP 详细信息
+     * Discover IP details
      *
      * @JSON
      */
@@ -26,7 +26,7 @@ class Api
         $ch = curl_init();
         $url = 'http://ip.taobao.com/service/getIpInfo.php?ip=' . $ipAddress;
 
-        // 执行HTTP请求
+        // HTTP request execution
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $url);
         $res = curl_exec($ch);
@@ -36,8 +36,8 @@ class Api
 
 
     /**
-     * 淘宝自动发货API
-     * 创建卡号
+     * Taobao automatic delivery API
+     * Create a Card
      *
      * @JSON
      */

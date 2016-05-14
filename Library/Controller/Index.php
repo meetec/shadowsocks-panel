@@ -17,7 +17,7 @@ class Index
 {
 
     /**
-     * 进入首页
+     * Go to Homepage
      */
     public function index()
     {

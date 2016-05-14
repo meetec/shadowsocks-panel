@@ -21,7 +21,7 @@ class Support
     }
 
     /**
-     * 工单系统
+     * Ticket System
      * @Authorization
      */
     public function ticket()

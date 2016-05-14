@@ -25,7 +25,7 @@ class Invite
     }
 
     /**
-     * 生成邀请码，必要权限检查
+     * Invitation code generation，Necessary permission checks
      *
      * @JSON
      * @Authorization
@@ -34,12 +34,12 @@ class Invite
     {
         $user = User::getUserByUserId(User::getCurrent()->uid);
 
-        $result = array('error' => 1, 'message' => '创建邀请码失败，您没有再次创建邀请码的次数了。当然，你可以用流量购买次数。(10GB/个)');
+        $result = array('error' => 1, 'message' => 'Create invitation code fails，You do not have an invitation code to create that number of times again. You can always purchase invitation code with exchange for traffic. (10GB / per invitations)');
         if ($user->invite_num > 0) {
             $invite = InviteModel::addInvite($user->uid, 'A');
             $result = array(
                 'error' => 0,
-                'message' => '创建邀请码成功，刷新后可见',
+                'message' => 'Create invitation code is successful, to view please refresh',
                 'invite_num' => $user->invite_num - 1,
                 'invite' => $invite
             );
@@ -49,7 +49,7 @@ class Invite
     }
 
     /**
-     * 购买邀请码，必要权限检查
+     * Buy invitation code, necessary permission checks
      *
      * @JSON
      * @Authorization
@@ -58,13 +58,13 @@ class Invite
     public function buy()
     {
         $user = User::getUserByUserId(User::getCurrent()->uid);
-        $result = array('error' => 1, 'message' => '购买失败，至少需要20GB流量才能购买邀请码。');
+        $result = array('error' => 1, 'message' => 'Purchase fails, you need at least 20GB traffic to buy invitation code.');
         $transfer = Utils::GB * 10;
         if ($user->transfer > ($transfer * 2)) {
             $user->transfer = $user->transfer - $transfer;
             $user->invite_num = $user->invite_num + 1;
             $user->save();
-            $result = array('error' => 0, 'message' => '购买成功，扣除手续费10GB流量', 'invite_num' => $user->invite_num);
+            $result = array('error' => 0, 'message' => 'Successful purchase, with 10GB of traffic', 'invite_num' => $user->invite_num);
         }
         return $result;
     }

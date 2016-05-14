@@ -22,7 +22,7 @@ class Node
 {
     public function Index()
     {
-        throw new Error("无知的人类啊", 555);
+        throw new Error("Ignorance of human", 555);
     }
 
     /**
@@ -43,7 +43,7 @@ class Node
             Template::putContext('node', $node);
             Template::setView('node/QrCode');
         } else {
-            Message::show('你不是 VIP, 无法使用高级节点！', 'member/node');
+            Message::show('You are not VIP, Unable to use the advanced node!', 'member/node');
         }
     }
 
@@ -62,12 +62,12 @@ class Node
             Template::putContext('node', $node);
             Template::setView('node/Json');
         } else {
-            Message::show('你不是 VIP, 无法使用高级节点！', 'member/node');
+            Message::show('You are not VIP, Unable to use the advanced node!', 'member/node');
         }
     }
 
     /**
-     * 导出节点列表
+     * Export node list
      */
     public function jsonList()
     {
