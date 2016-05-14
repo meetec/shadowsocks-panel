@@ -14,7 +14,7 @@ use \Model\Message as MessageModel;
 use Model\User;
 
 /**
- * Controller: 消息管理
+ * Controller: Message Management
  * @Admin
  * @Authorization
  */
@@ -30,7 +30,7 @@ class Message
     }
 
     /**
-     * 修改 or 新增
+     * New or Modify
      *
      * @JSON
      * @return array
@@ -40,9 +40,9 @@ class Message
 
         $result = array('error' => 1, 'message' => 'Request failed');
 
-        if ($_POST['message_id'] != null) { // 修改
+        if ($_POST['message_id'] != null) { // Modify
             $msg = MessageModel::getMessageById(trim($_POST['message_id']));
-            if ($msg) { // 修改
+            if ($msg) { // Modify
                 $msg->content = $_POST['message_content'] == null ? "" : $_POST['message_content'];
                 $msg->pushTime = $_POST['message_pushTime'] == null ? 0 : strtotime($_POST['message_pushTime']);
                 $msg->pushUsers = $_POST['message_pushUsers'] == null ? -1 : $_POST['message_pushUsers'];
@@ -50,7 +50,7 @@ class Message
                 $msg->pushEndTime = $_POST['message_pushEndTime'] == null ? 0 : strtotime($_POST['message_pushEndTime']);
                 $msg->enable = $_POST['message_enable'] == null ? 0 : $_POST['message_enable'];
                 $msg->save();
-                $result = array('error' => 0, 'message' => '更新成功');
+                $result = array('error' => 0, 'message' => 'Update completed');
             }
         } else {
             $msg = new MessageModel();
@@ -61,43 +61,43 @@ class Message
             $msg->pushEndTime = $_POST['message_pushEndTime'] == null ? 0 : strtotime($_POST['message_pushEndTime']);
             $msg->enable = $_POST['message_enable'] == null ? 0 : $_POST['message_enable'];
             $msg->save();
-            $result = array('error' => 0, 'message' => '添加新消息成功');
+            $result = array('error' => 0, 'message' => 'Add news Success');
         }
-        $msg->content = nl2br(mb_substr(htmlspecialchars($msg->content), 0, 20, 'utf-8'));
+        $msg->content = nl2br(mb_substr(htmlspecialchars($msg->content), 0, 500, 'utf-8'));
         $msg->pushEndTime = date('Y-m-d H:i:s', $msg->pushEndTime);
         $type = "";
         switch ($msg->type) {
             case '-1':
-                $type = "重复消息";
+                $type = "Duplicate messages";
                 break;
             case '-2':
-                $type = "系统公告";
+                $type = "System notification";
                 break;
             case '-3':
-                $type = "套餐处说明";
+                $type = "Packages at the instructions";
                 break;
             case '-4':
-                $type = "首页浮动提示";
+                $type = "Tooltips";
                 break;
             case '-5':
-                $type = "登录页公告";
+                $type = "Login page announcement";
                 break;
             case '0':
             default:
-                $type = "正常消息";
+                $type = "Normal message";
                 break;
         }
         $msg->type = $type;
         $pushTo = "";
         switch ($msg->pushUsers) {
             case '-2':
-                $pushTo = "系统固定消息";
+                $pushTo = "Fixed message system";
                 break;
             case '-1':
-                $pushTo = "系统消息";
+                $pushTo = "system information";
                 break;
             default:
-                $pushTo = "用户：" . $msg->pushUsers;
+                $pushTo = "user:" . $msg->pushUsers;
                 break;
         }
         $msg->pushUsers = $pushTo;
@@ -107,7 +107,7 @@ class Message
     }
 
     /**
-     * 删除
+     * Delete
      * @JSON
      */
     public function delete()
@@ -116,13 +116,13 @@ class Message
 
         if ($_POST['message_id'] != null) {
             MessageModel::deleteMessageById(intval(trim($_POST['message_id'])));
-            $result = array('error' => 0, 'message' => '删除成功');
+            $result = array('error' => 0, 'message' => 'Successfully Deleted');
         }
         return $result;
     }
 
     /**
-     * 查询
+     * Inquire
      * @JSON
      */
     public function query()

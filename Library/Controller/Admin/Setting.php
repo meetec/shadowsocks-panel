@@ -22,7 +22,7 @@ class Setting
 {
 
     /**
-     * 系统设置 页面
+     * System Settings page
      */
     public function index()
     {
@@ -38,7 +38,7 @@ class Setting
     }
 
     /**
-     * 详细参数 页面
+     * Detailed parameters page
      */
     public function system()
     {
@@ -50,7 +50,7 @@ class Setting
     }
 
     /**
-     * 读取option详细配置
+     * Read the detailed configuration option
      *
      * @JSON
      */
@@ -65,7 +65,7 @@ class Setting
     }
 
     /**
-     * 修改
+     * Modify
      * @JSON
      */
     public function update()
@@ -75,7 +75,7 @@ class Setting
         $result['message'] = '保存完成';
         if ($_POST['option_v'] != null && $_POST['option_k'] != null) {
             Option::set(trim($_POST['option_k']), trim($_POST['option_v']));
-            // 初始化一次系统设置
+            // A system initialization settings
             Option::init();
         }
         return $result;
@@ -97,7 +97,7 @@ class Setting
         Option::init();
 
         $result['error'] = 0;
-        $result['message'] = '保存完毕';
+        $result['message'] = 'Saved';
         return $result;
     }
 
@@ -116,7 +116,7 @@ class Setting
         Option::init();
 
         $result['error'] = 0;
-        $result['message'] = '保存完毕';
+        $result['message'] = 'Saved';
         return $result;
     }
 
@@ -136,7 +136,7 @@ class Setting
         Option::init();
 
         $result['error'] = 0;
-        $result['message'] = '保存完毕';
+        $result['message'] = 'Saved';
         return $result;
     }
 
@@ -153,9 +153,9 @@ class Setting
      */
     public function saveCustomMailContent()
     {
-        $type = $_POST['custom_type']; // 获得修改类型
+        $type = $_POST['custom_type']; // Obtain a modified type
         if (strpos($type, 'custom_mail_') !== false) {
-            $content = $_POST['content']; // 取得修改的内容
+            $content = $_POST['content']; // Obtain the modified contents
             if(!$content) {
                 throw new Error('Parameter error', 405);
             }

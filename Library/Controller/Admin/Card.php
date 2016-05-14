@@ -42,15 +42,15 @@ class Card
     }
 
     /**
-     * 修改 和 新增 卡号
+     * Modifications and new card
      *
      * @JSON
      */
     public function update()
     {
-        $result = array('error' => 1, 'message' => '请求错误');
+        $result = array('error' => 1, 'message' => 'Request Error');
         $user = User::getCurrent();
-        if ($_POST['card_no'] != null && $_POST['card'] != null) { // 修改
+        if ($_POST['card_no'] != null && $_POST['card'] != null) { // modify
             $cardId = intval(trim($_POST['card']));
             $card = MCard::queryCardById($cardId);
             if (!$card) {
@@ -64,21 +64,21 @@ class Card
             $card->save();
             $card->add_time = date("Y-m-d H:i:s", $card->add_time);
             if($card->type == 0) {
-                $card->type = "套餐卡";
+                $card->type = "Package card";
             } elseif ($card->type == 1) {
-                $card->type = "流量卡";
+                $card->type = "Traffic Cards";
             } elseif ($card->type == 2) {
-                $card->type = "试用延期卡";
+                $card->type = "Trial postponed Cards";
             } elseif ($card->type == 3) {
-                $card->type = "余额卡";
+                $card->type = "Balance card";
             }
 
-            $card->status = $card->status == 1 ? "未用" : "已用";
+            $card->status = $card->status == 1 ? "Unused" : "used";
             $result['error'] = 0;
-            $result['message'] = "修改卡号成功。";
+            $result['message'] = "Modify card success.";
             $result['card'] = $card;
             return $result;
-        } else { // 新增
+        } else { // New
 
             $number = 1;
             if ($_POST['card_num'] != null) {
@@ -97,33 +97,33 @@ class Card
                 $card->save();
                 $card->add_time = date("Y-m-d H:i:s", $card->add_time);
                 if($card->type == 0) {
-                    $card->type = "套餐卡";
+                    $card->type = "Package card";
                 } elseif ($card->type == 1) {
-                    $card->type = "流量卡";
+                    $card->type = "Traffic Cards";
                 } elseif ($card->type == 2) {
-                    $card->type = "试用延期卡";
+                    $card->type = "Trial postponed Cards";
                 } elseif ($card->type == 3) {
-                    $card->type = "余额卡";
+                    $card->type = "Balance card";
                 }
 
-                $card->status = $card->status == 1 ? "未用" : "已用";
+                $card->status = $card->status == 1 ? "Unused" : "Used";
                 $cardList[] = $card;
             }
             $result['error'] = 0;
-            $result['message'] = "新增卡号成功，共 {$number} 个。";
+            $result['message'] = "The new card is successful, a total of {$number} A.";
             $result['card'] = $cardList;
             return $result;
         }
     }
 
     /**
-     * 删除卡号
+     * Delete card
      * @JSON
      */
     public function delete()
     {
         MCard::queryCardById(trim($_POST['id']))->delete();
-        return array('error' => 0, 'message' => '删除成功');
+        return array('error' => 0, 'message' => 'successfully deleted');
     }
 
 }

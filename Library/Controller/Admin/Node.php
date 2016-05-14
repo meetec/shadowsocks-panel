@@ -32,12 +32,12 @@ class Node
     }
 
     /**
-     * 添加 node
+     * Add to node
      * @JSON
      */
     public function update()
     {
-        $result = array('error' => -1, 'message' => '保存失败');
+        $result = array('error' => -1, 'message' => 'Save failed');
         if ($_POST['node_id'] == null) {
             $node = new NodeModel();
             if ($_POST['node_name'] != null) {
@@ -65,7 +65,7 @@ class Node
                 $node->order = intval($_POST['node_order']);
             }
             $node->save();
-            $result = array('error' => 0, 'message' => '添加成功', 'node' => $node);
+            $result = array('error' => 0, 'message' => 'Added successfully', 'node' => $node);
         } else {
             if ($_POST['node_id'] != '') {
                 $node = NodeModel::getNodeById(trim($_POST['node_id']));
@@ -94,7 +94,7 @@ class Node
                     $node->order = intval($_POST['node_order']);
                 }
                 $node->save();
-                $result = array('error' => 0, 'message' => '修改成功', 'node' => $node);
+                $result = array('error' => 0, 'message' => 'Successfully modified', 'node' => $node);
             }
         }
         return $result;
@@ -119,11 +119,11 @@ class Node
      */
     public function delete()
     {
-        $result = array('error' => -1, 'message' => '删除失败');
+        $result = array('error' => -1, 'message' => 'Failed to delete');
         if ($_POST['node_id'] != null) {
 
             if (NodeModel::deleteNode($_POST['node_id']) > 0) {
-                $result = array('error' => 0, 'message' => '删除成功');
+                $result = array('error' => 0, 'message' => 'Successfully Deleted');
             }
 
         }

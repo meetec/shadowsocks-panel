@@ -39,26 +39,26 @@ class Mailer
      */
     public function test()
     {
-        $result = array('error' => 1, 'message' => '发送邮件错误，请检查邮件配置');
+        $result = array('error' => 1, 'message' => 'Error sending mail, check the mail profile');
         $user = User::getCurrent();
         $mailer = Mailer1::getInstance();
 
         $mail = new Mail();
         $mail->to = $user->email;
-        $mail->subject = '[' . SITE_NAME . '] 这是一封测试邮件';
-        $mail->content = '这是一封<b>单条发送</b>测试邮件';
-        $mail->content .= "<p style=\"padding: 1.5em 1em 0; color: #999; font-size: 12px;\">—— 本邮件由 " . SITE_NAME . " (<a href=\"" . BASE_URL . "\">" . BASE_URL . "</a>) 管理员发送</p>";
+        $mail->subject = '[' . SITE_NAME . '] This is a test message';
+        $mail->content = 'This is an<b>Single send</b>Test message';
+        $mail->content .= "<p style=\"padding: 1.5em 1em 0; color: #999; font-size: 12px;\">—— This message from the " . SITE_NAME . " (<a href=\"" . BASE_URL . "\">" . BASE_URL . "</a>) Send Administrator</p>";
         if (!$mailer->send($mail)) {
             return $result;
         }
         $mailer->toQueue(true);
-        $mail->subject = '[' . SITE_NAME . '] 这是一封多条发送测试邮件';
-        $mail->content = '这是一封<b>多条发送</b>测试邮件';
-        $mail->content .= "<p style=\"padding: 1.5em 1em 0; color: #999; font-size: 12px;\">—— 本邮件由 " . SITE_NAME . " (<a href=\"" . BASE_URL . "\">" . BASE_URL . "</a>) 管理员发送</p>";
+        $mail->subject = '[' . SITE_NAME . '] This is more than one item to send a test message';
+        $mail->content = 'This is an<b>A plurality of transmitting</b>Test message';
+        $mail->content .= "<p style=\"padding: 1.5em 1em 0; color: #999; font-size: 12px;\">—— This message from the " . SITE_NAME . " (<a href=\"" . BASE_URL . "\">" . BASE_URL . "</a>) Send Administrator</p>";
         if (!$mailer->send($mail)) {
             return $result;
         } else {
-            $result = array('error' => 0, 'message' => '邮件已经发送到您的邮箱上');
+            $result = array('error' => 0, 'message' => 'Message has been sent to your mailbox on the');
             return $result;
         }
     }
@@ -68,7 +68,7 @@ class Mailer
      */
     public function reset()
     {
-        $result = array('error' => 0, 'message' => '重置 ' . $_POST['mail_type'] . ' 邮件配置项完成');
+        $result = array('error' => 0, 'message' => 'Reset ' . $_POST['mail_type'] . ' Mail configuration item complete');
         Option::delete('Mail_' . $_POST['mail_type']);
 
         Option::init();
@@ -84,9 +84,9 @@ class Mailer
     {
         $subject = $_POST['mailer_subject'];
         $content = nl2br(htmlspecialchars($_POST['mailer_content']));
-        $content .= "<p style=\"padding: 1.5em 1em 0; color: #999; font-size: 12px;\">—— 本邮件由 " . SITE_NAME . " (<a href=\"" . BASE_URL . "\">" . BASE_URL . "</a>) 管理员发送</p>";
+        $content .= "<p style=\"padding: 1.5em 1em 0; color: #999; font-size: 12px;\">—— This message from the " . SITE_NAME . " (<a href=\"" . BASE_URL . "\">" . BASE_URL . "</a>) Send Administrator</p>";
         if ($subject == null || $subject == '' || $content == null || $content == '') {
-            return array('error' => 1, 'message' => '请求错误，您提交的参数不对。');
+            return array('error' => 1, 'message' => 'Request error, the parameters you submit wrong.');
         }
         $users = User::getUserList();
         $mailer = Mailer1::getInstance();
@@ -100,7 +100,7 @@ class Mailer
             $mailer->send($mail);
         }
 
-        return array('error' => 0, 'message' => '邮件列队正在工作，将在稍后开始发送..');
+        return array('error' => 0, 'message' => 'Message queue is working, we will begin at a later time..');
     }
 
     /**
@@ -126,11 +126,11 @@ class Mailer
                 $_config[] = ['key' => $k, 'value' => $v];
             }
         }
-        return array('error' => 0, 'message' => '请设置邮件参数', 'configs' => $_config, 'mailer' => $type);
+        return array('error' => 0, 'message' => 'Set message parameters', 'configs' => $_config, 'mailer' => $type);
     }
 
     /**
-     * 更新 邮件系统设置
+     * Mail Update System Settings
      *
      * @JSON
      */
@@ -140,7 +140,7 @@ class Mailer
         $result['message'] = '保存完成';
         foreach ($_POST as $key => $val) {
             if (!empty($val) && strpos($key, 'mail_') !== false) {
-                if (strpos($key, 'mailer') === false) { // 判断是否为 mail_mailer <- 这个字段是用于是被当前设定的邮件类名，此配置无需存入数据库
+                if (strpos($key, 'mailer') === false) { // Determine whether the mail mailer <- This field is used to set the current message is the class name, this configuration is stored in the database without
                     $k = str_replace('mail_', '', $key);
                     $data[$k] = trim($val);
                 }
@@ -153,7 +153,7 @@ class Mailer
             Option::set('MAIL_AVAILABLE', $mailer);
         } else {
             $result['error'] = 1;
-            $result['message'] = '保存失败，参数不完整';
+            $result['message'] = 'Save failed, incomplete parameters';
         }
         Option::init();
         return $result;
