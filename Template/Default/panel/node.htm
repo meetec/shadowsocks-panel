@@ -22,13 +22,8 @@
                         Option <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-<<<<<<< HEAD
-                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/Json?id={$node->id}">Profiles</a></li>
-                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/QRCode?id={$node->id}">QR code</a></li>
-=======
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:getNodeInfo('{$node->id}')">节点信息</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:addToAndroid('{$node->id}')">添加至安卓客户端</a></li>
->>>>>>> sendya/master
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:getNodeInfo('{$node->id}')">Node Information</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:addToAndroid('{$node->id}')">Add to Android</a></li>
                     </ul>
                 </div>
             </div>
@@ -59,13 +54,8 @@
                         Option <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-<<<<<<< HEAD
-                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/Json?id={$node->id}">Profiles</a></li>
-                        <li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="/node/QRCode?id={$node->id}">QR code</a></li>
-=======
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:getNodeInfo('{$node->id}')">节点信息</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:addToAndroid('{$node->id}')">添加至安卓客户端</a></li>
->>>>>>> sendya/master
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:getNodeInfo('{$node->id}')">Node Information</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:addToAndroid('{$node->id}')">Add to Android</a></li>
                     </ul>
                 </div>
             </div>
@@ -184,7 +174,7 @@
                 success: function (result) {
                     if(result.code != 200){
                         $('#node-info-modal').modal('hide');
-                        showToastr(result.message, 0, 3000, '系统错误');
+                        showToastr(result.message, 0, 3000, 'system error');
                         return;
                     }
                     if(result.data.error == 0 && result.data.node != null && result.data.info != null) {
@@ -199,7 +189,7 @@
 
                 },
                 error: function (Xhr) {
-                    showToastr("出现未知错误，请重试或联系管理员", 0);
+                    showToastr("An unknown error occurred. Please try again or contact your administrator", 0);
                 }
             });
             $('#node-info-modal').modal('show', {backdrop: 'static'});
@@ -212,7 +202,7 @@
                 data: {id: nodeId},
                 success: function (result) {
                     if(result.code != 200){
-                        showToastr(result.message, 0, 3000, '系统错误');
+                        showToastr(result.message, 0, 3000, 'system error');
                         return;
                     }
                     if(result.data.error == 0 && result.data.node != null && result.data.info != null) {
@@ -222,7 +212,7 @@
                     }
                 },
                 error: function (Xhr) {
-                    showToastr("出现未知错误，请重试或联系管理员", 0);
+                    showToastr("An unknown error occurred. Please try again or contact your administrator", 0);
                 }
             });
         }
