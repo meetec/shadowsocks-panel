@@ -19,6 +19,7 @@
                 </thead>
                 <tbody>
                 <if condition="count($inviteList) > 0">
+<<<<<<< HEAD
                 <loop variable="$inviteList" key="$key" value="$invite">
                 <tr>
                     <td>{(date('Y-m-d H:i:s', $invite->dateLine))}</td>
@@ -30,6 +31,19 @@
                 </loop>
                 <else>
                 <tr><td colspan="3" align="center" style="text-align:center;">invitation codes</td></tr>
+=======
+                    <loop variable="$inviteList" key="$key" value="$invite">
+                        <tr>
+                            <td>{(date('Y-m-d H:i:s', $invite->dateLine))}</td>
+                            <td>{$invite->invite}</td>
+                            <td><if condition="$invite->status == 0">
+                                <a href="auth/login?invite={$invite->invite}#register" target="_blank">点击使用</a>
+                                <elseif condition="$invite->status == 1">已用</elseif><else>过期</if></td>
+                        </tr>
+                    </loop>
+                    <else>
+                        <tr><td colspan="3" align="center" style="text-align:center;">木有邀请码~ ٩( \'ω\' )و </td></tr>
+>>>>>>> sendya/master
                 </if>
                 </tbody>
             </table>
