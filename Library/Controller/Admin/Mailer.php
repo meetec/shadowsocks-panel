@@ -46,14 +46,14 @@ class Mailer
         $mail = new Mail();
         $mail->to = $user->email;
         $mail->subject = '[' . SITE_NAME . '] This is a test message';
-        $mail->content = 'This is an<b>Single send</b>Test message';
+        $mail->content = 'This is <b>Single send</b> Test message';
         $mail->content .= "<p style=\"padding: 1.5em 1em 0; color: #999; font-size: 12px;\">—— This message from the " . SITE_NAME . " (<a href=\"" . BASE_URL . "\">" . BASE_URL . "</a>) Send Administrator</p>";
         if (!$mailer->send($mail)) {
             return $result;
         }
         $mailer->toQueue(true);
         $mail->subject = '[' . SITE_NAME . '] This is more than one item to send a test message';
-        $mail->content = 'This is an<b>A plurality of transmitting</b>Test message';
+        $mail->content = 'This is <b>A plurality of transmitting</b> Test message';
         $mail->content .= "<p style=\"padding: 1.5em 1em 0; color: #999; font-size: 12px;\">—— This message from the " . SITE_NAME . " (<a href=\"" . BASE_URL . "\">" . BASE_URL . "</a>) Send Administrator</p>";
         if (!$mailer->send($mail)) {
             return $result;
@@ -137,7 +137,7 @@ class Mailer
     public function update()
     {
         $result['error'] = 0;
-        $result['message'] = '保存完成';
+        $result['message'] = 'Save to finish';
         foreach ($_POST as $key => $val) {
             if (!empty($val) && strpos($key, 'mail_') !== false) {
                 if (strpos($key, 'mailer') === false) { // Determine whether the mail mailer <- This field is used to set the current message is the class name, this configuration is stored in the database without

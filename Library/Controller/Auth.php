@@ -33,17 +33,17 @@ class Auth
      */
     public function login()
     {
-        /**
-         * 1. 判断用户是否已经登录,
-         *      若已经登录,则直接跳转到控制面板(仪表盘)中.
-         * 2. 加载登录页面模板,进入登录页面.
+         /**
+         * 1. Determining if user is logged,
+         *      If you have already logged in, go directly to the control panel (dashboard).
+         * 2. Loading login page template, enter the login page.
          */
         $user = User::getCurrent();
         if ($user->uid) {
             header("Location:/member");
         } else {
             if (isset($_REQUEST['email']) && isset($_REQUEST['passwd'])) {
-                $result = array('error' => 1, 'message' => '账户不存在啊喂!');
+                $result = array('error' => 1, 'message' => 'Account does not exist!');
                 $email = htmlspecialchars(trim($_REQUEST['email']));
                 $passwd = htmlspecialchars(trim($_REQUEST['passwd']));
                 $remember_me = htmlspecialchars(trim($_REQUEST['remember_me']));
@@ -53,7 +53,7 @@ class Auth
                 if ($user) {
                     if ($user->verifyPassword($passwd)) {
                         $result['error'] = 0;
-                        $result['message'] = '登录成功,即将跳转到 &gt;仪表盘';
+                        $result['message'] = 'Login is successful, will jump to &gt;dashboard';
 
                         $remember_me == 'week' ? $ext = 3600 * 24 * 7 : $ext = 3600;
                         $expire = time() + $ext;
@@ -64,7 +64,7 @@ class Auth
 
                         $_SESSION['currentUser'] = $user;
                     } else {
-                        $result['message'] = "账户名或密码错误, 请检查后再试!";
+                        $result['message'] = "Account name or password is incorrect, please check and try again!";
                     }
                 }
 
@@ -78,12 +78,12 @@ class Auth
     }
 
     /**
-     * 锁屏
+     * Lock screen
      * @JSON
      */
     public function lockScreen()
     {
-        // TODO -- 这个功能可能会弃用
+        // TODO -- This functionality may be deprecated
         // 2016-04-09
     }
 
@@ -101,31 +101,30 @@ class Auth
      */
     public function register()
     {
-        $result = array('error' => 1, 'message' => '注册失败');
+        $result = array('error' => 1, 'message' => 'Registration Failed');
         $email = strtolower(trim($_POST['r_email']));
         $userName = trim($_POST['r_user_name']);
         $passwd = trim($_POST['r_passwd']);
         $repasswd = trim($_POST['r_passwd2']);
         $inviteCode = trim($_POST['r_invite']);
-        $invite = Invite::getInviteByInviteCode($inviteCode); //校验 invite 是否可用
-
+        $invite = Invite::getInviteByInviteCode($inviteCode); //Check invite availability
         if ($invite->status != 0 || $invite == null || empty($invite)) {
-            $result['message'] = '邀请码不可用';
+            $result['message'] = 'Invitation code is unavailable';
         } else {
             if ($repasswd != $passwd) {
-                $result['message'] = '两次密码输入不一致';
+                $result['message'] = 'Enter the password twice inconsistent';
             } else {
                 if (strlen($passwd) < 6) {
-                    $result['message'] = '密码太短,至少8字符';
+                    $result['message'] = 'Password is too short, at least 8 characters';
                 } /* else if (strlen($userName) < 4) {
-            $result['message'] = '昵称太短,至少2中文字符或6个英文字符';
+            $result['message'] = 'Nickname is too short, at least two Chinese characters or English characters 6';
         }*/ else {
                     if ($chkEmail = Utils::mailCheck($email)) {
                         $result['message'] = $chkEmail;
                     } else {
                         $user = new User();
                         $user->email = $email;
-                        if ($userName == null) // 如果用户名没填写，则使用email当用户名
+                        if ($userName == null) // If the user name is not filled in, the user name when using email
                         {
                             $userName = $email;
                         }
@@ -133,41 +132,41 @@ class Auth
 
                         $user->nickname = $userName;
 
-                        // LEVEL 从数据库中获取
+                        // LEVEL Being from the database
                         $custom_transfer_level = json_decode(Option::get('custom_transfer_level'), true);
 
-                        // 定义邀请码套餐与流量单位
+                        // Packages and invitation code defined flow units
                         $transferNew = Utils::GB * intval($custom_transfer_level[$invite->plan]);
 
                         $user->transfer = $transferNew;
                         $user->invite = $inviteCode;
-                        $user->plan = $invite->plan;// 将邀请码的账户类型设定到注册用户上.
+                        $user->plan = $invite->plan;// The type of account invitation code to set the registered users.
                         $user->regDateLine = time();
                         $user->lastConnTime = $user->regDateLine;
                         $user->sspwd = Utils::randomChar();
-                        $user->payTime = time(); // 注册时支付时间
+                        $user->payTime = time(); // Paid time registration
                         $user_test_day = Option::get('user_test_day') ?: 7;
-                        $user->expireTime = time() + (3600 * 24 * intval($user_test_day)); // 到期时间
+                        $user->expireTime = time() + (3600 * 24 * intval($user_test_day)); // Paid time registration
                         if($userCount>0) {
-                            $user->enable = 0; // 停止账户
+                            $user->enable = 0; // Stop Account
                         } else {
-                            $user->enable = 1; // 第一个账户，默认设定为启用
+                            $user->enable = 1; // The first account, the default is set to start
                         }
                         $code = Utils::randomChar(10);
                         $forgePwdCode['verification'] = $code;
                         $forgePwdCode['time'] = time();
                         $user->forgePwdCode = json_encode($forgePwdCode);
 
-                        $user->port = Utils::getNewPort(); // 端口号
+                        $user->port = Utils::getNewPort(); // The port number
                         $user->setPassword($passwd);
                         $user->save();
 
-                        if($userCount>0) { // 需要验证的账户发送邮件
+                        if($userCount>0) { // The need to verify the account to send mail
                             $mailer = Mailer::getInstance();
                             $mailer->toQueue(false);
                             $mail = new Mail();
                             $mail->to = $user->email;
-                            $mail->subject = '[' . SITE_NAME . '] 新账户注册邮箱校验';
+                            $mail->subject = '[' . SITE_NAME . '] New Account Registration Mailbox check';
                             $mail->content = Option::get('custom_mail_verification_content');
                             $params = [
                                 'code' => $code,
@@ -183,13 +182,13 @@ class Auth
                         }
                         $invite->reguid = $user->uid;
                         $invite->regDateLine = $user->regDateLine;
-                        $invite->status = 1; // -1过期 0-未使用 1-已用
+                        $invite->status = 1; // -1 expored 0-not used 1-used
                         $invite->inviteIp = Utils::getUserIP();
                         $invite->save();
 
                         if (null != $user->uid && 0 != $user->uid) {
                             $result['error'] = 0;
-                            $result['message'] = '注册成功，您需要验证邮箱后才能使用本站功能。';
+                            $result['message'] = 'In order to use this site function after successful registration, you need to verify the mailbox.';
                         }
                     }
                 }
@@ -217,7 +216,7 @@ class Auth
             $mailer->toQueue(false);
             $mail = new Mail();
             $mail->to = $user->email;
-            $mail->subject = '[' . SITE_NAME . '] 新账户注册邮箱校验';
+            $mail->subject = '[' . SITE_NAME . '] New Account Registration Mailbox check';
             $mail->content = Option::get('custom_mail_verification_content');
             $params = [
                 'code' => $code,
@@ -232,7 +231,7 @@ class Auth
             $mailer->send($mail);
             $user->save();
         }
-        return array('error'=>0, 'message'=> '重新发送邮件成功。');
+        return array('error'=>0, 'message'=> 'Resend the message successfully.');
     }
 
     /**
@@ -257,7 +256,7 @@ class Auth
                     $mailer->toQueue(true, true);
                     $mail = new Mail();
                     $mail->to = $user->email;
-                    $mail->subject = '[' . SITE_NAME . '] 账户注册并校验成功通知';
+                    $mail->subject = '[' . SITE_NAME . '] Account registration and verification is successful notification';
                     $mail->content = Option::get('custom_mail_register_content');
                     $params = [
                         'nickname' => $user->nickname,
@@ -279,7 +278,7 @@ class Auth
 <head>
 
 <meta charset="utf-8">
-<title>邮箱校验成功 - 账户注册</title>
+<title>E-mail verification is successful - Account Registration</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="HandheldFriendly" content="true">
@@ -287,7 +286,7 @@ class Auth
 
 </head>
 <body>
-<p>校验成功，感谢您的注册。您现在可以使用本站所有服务了。</p>
+<p>Verification is successful, Thank you for registering. You can now use all the services of the site.</p>
 <p style="color: #999; font-size: 12px;"><a href="{$baseURL}">3秒后跳转到登录页</a></p>
 <script>setTimeout("window.location.href = '/auth/login#login';", 3000);</script>
 </body>
@@ -304,7 +303,7 @@ EOF;
 <head>
 
 <meta charset="utf-8">
-<title>邮箱校验失败 - 账户注册</title>
+<title>Mailbox check failed - Account Registration</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="HandheldFriendly" content="true">
@@ -312,8 +311,8 @@ EOF;
 
 </head>
 <body>
-<p>校验失败，校验时间超时或校验码不对。</p>
-<p style="color: #999; font-size: 12px;"><a href="{$baseURL}">3秒后跳转到登录页</a></p>
+<p>The check fails, check timeout or checksum wrong.</p>
+<p style="color: #999; font-size: 12px;"><a href="{$baseURL}">3 seconds after the jump to the login page</a></p>
 <script>setTimeout("window.location.href = '/auth/login#login';", 3000);</script>
 </body>
 </html>
@@ -329,7 +328,7 @@ EOF;
      */
     public function forgePwd()
     {
-        $result = array('error' => 1, 'message' => '请求找回密码失败，请刷新页面重试。');
+        $result = array('error' => 1, 'message' => 'Forgot your password request failed. Please refresh the page and try again.');
         $siteName = SITE_NAME;
 
         if (isset($_POST['email']) && $_POST['email'] != '') {
@@ -342,14 +341,15 @@ EOF;
             if($user->enable == 0) {
                 $verify_code = json_decode($user->forgePwdCode, true)['verification'];
                 if($verify_code!=null) {
-                    $result['message'] = '您的账户还未进行邮箱校验，请校验完毕后再试!';
+                    $result['message'] = 'Your account has not been evaluated mail check, please try again after checking is completed!';
                     return $result;
                 }
             }
 
             $user->lastFindPasswdTime = time();
             if ($user->lastFindPasswdCount != 0 && $user->lastFindPasswdCount > 2) {
-                $result['message'] = '找回密码重试次数已达上限!';
+                $result['message'] = 'Forgot password retry count has reached the upper limit
+!';
                 return $result;
             }
 
@@ -374,17 +374,17 @@ EOF;
             $mail->to = $user->email;
             $mail->subject = "[" . SITE_NAME . "] Password Recovery";
             $mail->content = $content;
-            $mailer->toQueue(true); // 添加到邮件列队
+            $mailer->toQueue(true); // Added to the message queue
             $isOk = $mailer->send($mail);
 
             $user->save();
 
             $result['uid'] = $user->uid;
             if ($isOk) {
-                $result['message'] = '验证代码已经发送到该注册邮件地址，请注意查收!<br/>请勿关闭本页面，您还需要验证码来验证您的账户所有权才可重置密码！！';
+                $result['message'] = 'Verification code has been sent to the registered e-mail address, please note that check! <br/> Do not turn this page, you need a verification code to verify your account ownership before resetting your password! !';
                 $result['error'] = 0;
             } else {
-                $result['message'] = '邮件发送失败, 请联系管理员检查邮件系统设置！';
+                $result['message'] = 'Failed to send a message, please contact your system administrator to check the mail settings!';
                 $result['error'] = 1;
             }
 
@@ -397,7 +397,7 @@ EOF;
                 $user = User::GetUserByUserId(trim($uid));
                 $forgePwdCode = json_decode($user->forgePwdCode, true);
 
-                // forgePwdCode.length > 1 且 验证码一样 且 时间不超过600秒(10分钟)
+                // forgePwdCode.length > 1 and codes and the same time is not more than 600 seconds (10 minutes)
                 if (count($forgePwdCode) > 1 && $forgePwdCode['code'] == $code && (time() - intval($forgePwdCode['time'])) < 600) {
                     $newPassword = Utils::randomChar(10);
                     $user->setPassword($newPassword);
@@ -423,19 +423,19 @@ EOF;
                     $mail->to = $user->email;
                     $mail->subject = "[" . SITE_NAME . "] Your new Password";
                     $mail->content = $content;
-                    $mailer->toQueue(true); // 添加到邮件列队
+                    $mailer->toQueue(true); // Added to the message queue
                     $isOk = $mailer->send($mail);
                     if ($isOk) {
-                        $result['message'] = '新密码已经发送到该账户邮件地址，请注意查收!<br/> 并且请在登录后修改密码！';
+                        $result['message'] = 'The new password has been sent to the account email address. Please check!<br/> The new password has been sent to the account email address. Please check';
                         $result['error'] = 0;
                     } else {
-                        $result['message'] = '邮件发送失败, 请联系管理员检查邮件系统设置！';
+                        $result['message'] = 'Failed to send a message, please contact your system administrator to check the mail settings!';
                         $result['error'] = 1;
                     }
 
 
                 } else {
-                    $result['message'] = '验证码已经超时或者 验证码填写不正确。请再次确认';
+                    $result['message'] = 'Verification code verification code has expired or improperly filled out. Please confirm again';
                     $result['error'] = -1;
                 }
                 return $result;

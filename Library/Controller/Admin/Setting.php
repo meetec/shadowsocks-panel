@@ -72,7 +72,7 @@ class Setting
     {
 
         $result['error'] = 0;
-        $result['message'] = '保存完成';
+        $result['message'] = 'Save to finish';
         if ($_POST['option_v'] != null && $_POST['option_k'] != null) {
             Option::set(trim($_POST['option_k']), trim($_POST['option_v']));
             // A system initialization settings
