@@ -65,13 +65,9 @@ class Auth
 
                         $_SESSION['currentUser'] = $user;
                         Logger::getInstance()->info('user [' . $user->email . '] Login success');
-                    } else {
-<<<<<<< HEAD
+                     } else {
                         $result['message'] = "Account name or password is incorrect, please check and try again!";
-=======
-                        $result['message'] = "账户名或密码错误, 请检查后再试!";
                         Logger::getInstance()->info('user [' . $user->email . '] Login failed! wrong password');
->>>>>>> sendya/master
                     }
                 }
 
@@ -116,22 +112,16 @@ class Auth
         $repasswd = trim($_POST['r_passwd2']);
         $inviteCode = trim($_POST['r_invite']);
         $invite = Invite::getInviteByInviteCode($inviteCode); //Check invite availability
+
         if ($invite->status != 0 || $invite == null || empty($invite)) {
             $result['message'] = 'Invitation code is unavailable';
         } else {
             if ($repasswd != $passwd) {
                 $result['message'] = 'Enter the password twice inconsistent';
             } else {
-                if (strlen($passwd) < 6) {
-<<<<<<< HEAD
+               if (strlen($passwd) < 6) {
                     $result['message'] = 'Password is too short, at least 8 characters';
-                } /* else if (strlen($userName) < 4) {
-            $result['message'] = 'Nickname is too short, at least two Chinese characters or English characters 6';
-        }*/ else {
-=======
-                    $result['message'] = '密码太短,至少8字符';
                 } else {
->>>>>>> sendya/master
                     if ($chkEmail = Utils::mailCheck($email)) {
                         $result['message'] = $chkEmail;
                     } else {
@@ -159,36 +149,17 @@ class Auth
                         $user->sspwd = Utils::randomChar();
                         $user->payTime = time(); // Paid time registration
                         $user_test_day = Option::get('user_test_day') ?: 7;
-<<<<<<< HEAD
                         $user->expireTime = time() + (3600 * 24 * intval($user_test_day)); // Paid time registration
-                        if($userCount>0) {
-                            $user->enable = 0; // Stop Account
-                        } else {
-                            $user->enable = 1; // The first account, the default is set to start
-                        }
-                        $code = Utils::randomChar(10);
-                        $forgePwdCode['verification'] = $code;
-                        $forgePwdCode['time'] = time();
-                        $user->forgePwdCode = json_encode($forgePwdCode);
 
-                        $user->port = Utils::getNewPort(); // The port number
-                        $user->setPassword($passwd);
-                        $user->save();
-
-                        if($userCount>0) { // The need to verify the account to send mail
-=======
-                        $user->expireTime = time() + (3600 * 24 * intval($user_test_day)); // 到期时间
-
-                        $mailVerify = Option::get('mail_verify'); // 邮件验证是否开启
+                        $mailVerify = Option::get('mail_verify'); // Verify that the mail open
 
                         if ($userCount > 0 && $mailVerify) {
-                            $user->enable = 0; // 停止账户
+                            $user->enable = 0; // Stop Account
                             $code = Utils::randomChar(10);
                             $forgePwdCode['verification'] = $code;
                             $forgePwdCode['time'] = time();
                             $user->forgePwdCode = json_encode($forgePwdCode);
 
->>>>>>> sendya/master
                             $mailer = Mailer::getInstance();
                             $mailer->toQueue(false);
                             $mail = new Mail();
@@ -207,11 +178,11 @@ class Auth
                             $mail->content = Utils::placeholderReplace($mail->content, $params);
                             $mailer->send($mail);
                         } else {
-                            $user->enable = 1; // 第一个账户，默认设定为启用
+                            $user->enable = 1; // The first account, the default is set to start
                             $user->forgePwdCode = null;
                         }
 
-                        $user->port = Utils::getNewPort(); // 端口号
+                        $user->port = Utils::getNewPort(); // The port number
                         $user->setPassword($passwd);
                         $user->save();
 
@@ -223,14 +194,10 @@ class Auth
 
                         if (null != $user->uid && 0 != $user->uid) {
                             $result['error'] = 0;
-<<<<<<< HEAD
-                            $result['message'] = 'In order to use this site function after successful registration, you need to verify the mailbox.';
-=======
-                            $result['message'] = '注册成功';
+                            $result['message'] = 'Registration successful';
                         }
                         if ($mailVerify) {
-                            $result['message'] .= '，您需要验证邮箱后才能使用本站功能。';
->>>>>>> sendya/master
+                            $result['message'] .= 'In order to use this site, you need to verify the email.';
                         }
                         Logger::getInstance()->info('user [' . $user->email . '] register success');
                     }
@@ -275,11 +242,7 @@ class Auth
             $user->save();
             Logger::getInstance()->info('user [' . $user->email . '] find password, code ' . $code);
         }
-<<<<<<< HEAD
-        return array('error'=>0, 'message'=> 'Resend the message successfully.');
-=======
-        return array('error' => 0, 'message' => '重新发送邮件成功。');
->>>>>>> sendya/master
+        return array('error' => 0, 'message' => 'Resend the message successfully.');
     }
 
     /**
@@ -388,13 +351,8 @@ EOF;
 
             if ($user->enable == 0) {
                 $verify_code = json_decode($user->forgePwdCode, true)['verification'];
-<<<<<<< HEAD
-                if($verify_code!=null) {
-                    $result['message'] = 'Your account has not been evaluated mail check, please try again after checking is completed!';
-=======
                 if ($verify_code != null) {
-                    $result['message'] = '您的账户还未进行邮箱校验，请校验完毕后再试!';
->>>>>>> sendya/master
+                    $result['message'] = 'Your account has not been evaluated mail check, please try again after checking is completed!';
                     return $result;
                 }
             }
