@@ -1,7 +1,7 @@
 #!env php
 <?php
 /**
- * Project Titor
+ * KK-Framework install
  * Author: kookxiang <r18@ikk.me>
  */
 
@@ -71,7 +71,6 @@ function copyDir($strSrcDir, $strDstDir)
     return true;
 }
 
-
 function delDir($dir) {
     //先删除目录下的文件：
     $dh=@opendir($dir);
@@ -95,6 +94,26 @@ function delDir($dir) {
     }
 }
 
+function colorize($text, $status) {
+    $out = "";
+    switch($status) {
+        case "SUCCESS":
+            $out = "[1;34;42m"; //Green background
+            break;
+        case "FAILURE":
+            $out = "[1;37;41m"; //Red background
+            break;
+        case "WARNING":
+            $out = "[1;37;43m"; //Yellow background
+            break;
+        case "NOTE":
+            $out = "[44m"; //Blue background
+            break;
+        default:
+            throw new Exception("Invalid status: " . $status);
+    }
+    return chr(27) . "$out" . "$text" . chr(27) . "[0m";
+}
 
 switch ($argv[1]) {
     case 'install':
@@ -106,7 +125,7 @@ switch ($argv[1]) {
             // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             $binary = curl_exec($ch);
             if (curl_errno($ch)) {
-                echo 'FAILED!' . PHP_EOL . curl_error($ch);
+                echo colorize('FAILED!' . PHP_EOL . curl_error($ch), 'FAILURE');
                 curl_close($ch);
                 break;
             }
@@ -117,9 +136,14 @@ switch ($argv[1]) {
             echo 'Done!' . PHP_EOL;
         }
         echo 'Now installing dependencies...' . PHP_EOL;
+        if(!function_exists('system') || !function_exists('exec')) {
+            echo colorize('FAILED! system() or exec() function is disabled!', 'FAILURE') . PHP_EOL;
+            echo 'Please run command: ' . colorize('php -d disable_functions=\'\' index.php install', 'FAILURE') . PHP_EOL;
+            break;
+        }
         system(PHP_BINARY . ' ' . ROOT_PATH . 'composer.phar install');
         if (!file_exists(ROOT_PATH . 'Package/autoload.php')) {
-            echo 'It seems composer failed to install package';
+            echo colorize('It seems composer failed to install package', 'FAILURE') . PHP_EOL;
             break;
         }
         echo 'Now reloading packages and config...';
@@ -127,7 +151,7 @@ switch ($argv[1]) {
         if (!file_exists($configFile)) {
             echo 'Config Unknown... copying..' . PHP_EOL;
             copy(DATA_PATH . 'Config.simple.php', $configFile);
-            echo 'Please modify ./Data/Config.php and try again';
+            echo colorize('Please modify ./Data/Config.php and try again', 'WARNING') . PHP_EOL;
             break;
         }
 
@@ -151,24 +175,28 @@ switch ($argv[1]) {
 
         echo 'Now migrating database...' . PHP_EOL;
         if (PATH_SEPARATOR != ':') {
-            $phinxCommand = ROOT_PATH . 'Package\bin\phinx.bat migrate';
+            $phinxCommand = ROOT_PATH . 'Package\bin\phinx.bat';
         } else {
-            $phinxCommand = ROOT_PATH . 'Package/bin/phinx';
-            if (!is_executable($phinxCommand)) {
-                echo 'Package/ directory Permission denied , change your directory Permission(chmod -R +x Package/)' . PHP_EOL;
-                break;
-            }
-            $phinxCommand .= ' migrate';
+            $phinxCommand = PHP_BINARY . ' ' . ROOT_PATH . 'Package/robmorgan/phinx/bin/phinx';
         }
-        system($phinxCommand);
-
+        exec($phinxCommand . ' migrate', $return_arr, $return_arr2);
+        if(stripos($return_arr[count($return_arr)-1], 'All Done.') === false) {
+            echo colorize('FAILED! migrate database wrong. Please run command: ', 'FAILURE') . colorize('./Package/bin/phinx migrate', 'WARNING') . PHP_EOL;
+            // rollback
+            exec($phinxCommand . ' rollback', $return_arr, $return_arr2);
+            break;
+        } else {
+            foreach($return_arr as $ret) {
+                echo $ret . PHP_EOL;
+            }
+        }
         echo 'Now installing resources...' . PHP_EOL;
         echo 'Deleting old resources...  ' . PHP_EOL;
-        echo delDir(ROOT_PATH . 'Public/Resource') ? 'done.' . PHP_EOL : 'old resources not exist.' . PHP_EOL;
+        echo delDir(ROOT_PATH . 'Public/Resource') ? 'Done.' . PHP_EOL : 'old resources not exist.' . PHP_EOL;
         echo 'Copying resources...' . PHP_EOL;
         copyDir(ROOT_PATH . 'Resource', ROOT_PATH . 'Public/Resource');
-        
-        echo 'All done~ Cheers!';
+
+        echo colorize('All done~ Cheers! open site: ', 'NOTE') . colorize(BASE_URL . 'yourdomain.com/', 'SUCCESS') . PHP_EOL;
         break;
     case 'import-sspanel':
         // TODO: 从 ss-panel 导入用户数据

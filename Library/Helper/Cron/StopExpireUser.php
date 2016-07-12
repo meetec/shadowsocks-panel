@@ -9,6 +9,7 @@ namespace Helper\Cron;
 
 use Contactable\ICron;
 
+use Helper\Logger;
 use Helper\Mailer;
 use Helper\Option;
 use Helper\Utils;
@@ -29,7 +30,7 @@ class StopExpireUser implements ICron
     {
         $users = User::getUserArrayByExpire();
         $notificationMail = Option::get('mail_stop_expire_notification');
-        $mailContent = Option::get('custom_mail_stop_expire_content');
+        $mailContentTemplate = Option::get('custom_mail_stop_expire_content');
 
         if (!$notificationMail) {
             Option::set('mail_stop_expire_notification', 0); // 设置邮件提醒的系统参数
@@ -40,6 +41,7 @@ class StopExpireUser implements ICron
 
         foreach ($users as $user) {
             $user->stop();
+            Logger::getInstance()->info('user ['.$user->email.'] 未续费或流量超用已被暂停服务');
             if ($notificationMail) {
                 $mail = new Mail();
                 $mail->to = $user->email;
@@ -51,7 +53,7 @@ class StopExpireUser implements ICron
                     'transfer' => Utils::flowAutoShow($user->transfer),
                     'expireTime' => date('Y-m-d H:i:s', $user->expireTime)
                 ];
-                $mailContent = Utils::placeholderReplace($mailContent, $params);
+                $mailContent = Utils::placeholderReplace($mailContentTemplate, $params);
                 $mailContent .= "<p style=\"padding: 1.5em 1em 0; color: #999; font-size: 12px;\">—— 本邮件由 ". SITE_NAME ." (<a href=\"".BASE_URL."\">".BASE_URL."</a>) 账户管控系统发送</p>";
                 $mail->content = $mailContent;
                 $mailer->send($mail);

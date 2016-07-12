@@ -6,6 +6,7 @@
  */
 namespace Controller;
 
+use Helper\Logger;
 use Helper\Mailer;
 use Helper\Stats;
 use Model\Invite;
@@ -63,8 +64,14 @@ class Auth
                         setcookie("token", base64_encode(Encrypt::encode($token, ENCRYPT_KEY)), $expire, "/");
 
                         $_SESSION['currentUser'] = $user;
+                        Logger::getInstance()->info('user [' . $user->email . '] Login success');
                     } else {
+<<<<<<< HEAD
                         $result['message'] = "Account name or password is incorrect, please check and try again!";
+=======
+                        $result['message'] = "账户名或密码错误, 请检查后再试!";
+                        Logger::getInstance()->info('user [' . $user->email . '] Login failed! wrong password');
+>>>>>>> sendya/master
                     }
                 }
 
@@ -89,6 +96,7 @@ class Auth
 
     public function logout()
     {
+        Logger::getInstance()->info('user [' . User::getCurrent()->email . '] Logout');
         setcookie("uid", '', time() - 3600, "/");
         setcookie("expire", '', time() - 3600, "/");
         setcookie("token", '', time() - 3600, "/");
@@ -115,10 +123,15 @@ class Auth
                 $result['message'] = 'Enter the password twice inconsistent';
             } else {
                 if (strlen($passwd) < 6) {
+<<<<<<< HEAD
                     $result['message'] = 'Password is too short, at least 8 characters';
                 } /* else if (strlen($userName) < 4) {
             $result['message'] = 'Nickname is too short, at least two Chinese characters or English characters 6';
         }*/ else {
+=======
+                    $result['message'] = '密码太短,至少8字符';
+                } else {
+>>>>>>> sendya/master
                     if ($chkEmail = Utils::mailCheck($email)) {
                         $result['message'] = $chkEmail;
                     } else {
@@ -146,6 +159,7 @@ class Auth
                         $user->sspwd = Utils::randomChar();
                         $user->payTime = time(); // Paid time registration
                         $user_test_day = Option::get('user_test_day') ?: 7;
+<<<<<<< HEAD
                         $user->expireTime = time() + (3600 * 24 * intval($user_test_day)); // Paid time registration
                         if($userCount>0) {
                             $user->enable = 0; // Stop Account
@@ -162,6 +176,19 @@ class Auth
                         $user->save();
 
                         if($userCount>0) { // The need to verify the account to send mail
+=======
+                        $user->expireTime = time() + (3600 * 24 * intval($user_test_day)); // 到期时间
+
+                        $mailVerify = Option::get('mail_verify'); // 邮件验证是否开启
+
+                        if ($userCount > 0 && $mailVerify) {
+                            $user->enable = 0; // 停止账户
+                            $code = Utils::randomChar(10);
+                            $forgePwdCode['verification'] = $code;
+                            $forgePwdCode['time'] = time();
+                            $user->forgePwdCode = json_encode($forgePwdCode);
+
+>>>>>>> sendya/master
                             $mailer = Mailer::getInstance();
                             $mailer->toQueue(false);
                             $mail = new Mail();
@@ -175,11 +202,19 @@ class Auth
                                 'useTraffic' => Utils::flowAutoShow($user->flow_up + $user->flow_down),
                                 'transfer' => Utils::flowAutoShow($user->transfer),
                                 'expireTime' => date('Y-m-d H:i:s', $user->expireTime),
-                                'REGISTER_URL' => base64_encode($user->uid . "\t" . $forgePwdCode['verification'] . "\t" . $forgePwdCode['time'])
+                                'REGISTER_URL' => base64_encode($user->email . "\t" . $forgePwdCode['verification'] . "\t" . $forgePwdCode['time'])
                             ];
                             $mail->content = Utils::placeholderReplace($mail->content, $params);
                             $mailer->send($mail);
+                        } else {
+                            $user->enable = 1; // 第一个账户，默认设定为启用
+                            $user->forgePwdCode = null;
                         }
+
+                        $user->port = Utils::getNewPort(); // 端口号
+                        $user->setPassword($passwd);
+                        $user->save();
+
                         $invite->reguid = $user->uid;
                         $invite->regDateLine = $user->regDateLine;
                         $invite->status = 1; // -1 expored 0-not used 1-used
@@ -188,8 +223,16 @@ class Auth
 
                         if (null != $user->uid && 0 != $user->uid) {
                             $result['error'] = 0;
+<<<<<<< HEAD
                             $result['message'] = 'In order to use this site function after successful registration, you need to verify the mailbox.';
+=======
+                            $result['message'] = '注册成功';
                         }
+                        if ($mailVerify) {
+                            $result['message'] .= '，您需要验证邮箱后才能使用本站功能。';
+>>>>>>> sendya/master
+                        }
+                        Logger::getInstance()->info('user [' . $user->email . '] register success');
                     }
                 }
             }
@@ -204,7 +247,7 @@ class Auth
      */
     public function resend()
     {
-        if($_POST['auth'] == 'y') {
+        if ($_POST['auth'] == 'y') {
             $user = User::getCurrent();
 
             $code = Utils::randomChar(10);
@@ -225,13 +268,18 @@ class Auth
                 'useTraffic' => Utils::flowAutoShow($user->flow_up + $user->flow_down),
                 'transfer' => Utils::flowAutoShow($user->transfer),
                 'expireTime' => date('Y-m-d H:i:s', $user->expireTime),
-                'REGISTER_URL' => base64_encode($user->uid . "\t" . $forgePwdCode['verification'] . "\t" . $forgePwdCode['time'])
+                'REGISTER_URL' => base64_encode($user->email . "\t" . $forgePwdCode['verification'] . "\t" . $forgePwdCode['time'])
             ];
             $mail->content = Utils::placeholderReplace($mail->content, $params);
             $mailer->send($mail);
             $user->save();
+            Logger::getInstance()->info('user [' . $user->email . '] find password, code ' . $code);
         }
+<<<<<<< HEAD
         return array('error'=>0, 'message'=> 'Resend the message successfully.');
+=======
+        return array('error' => 0, 'message' => '重新发送邮件成功。');
+>>>>>>> sendya/master
     }
 
     /**
@@ -240,17 +288,17 @@ class Auth
      */
     public function verification()
     {
-        if($_GET['verification']!=null) {
+        if ($_GET['verification'] != null) {
             $list = explode("\t", base64_decode($_GET['verification']));
 
-            if(count($list)>2) {
-                $user = User::getUserByUserId($list[0]);
+            if (count($list) > 2) {
+                $user = User::getUserByEmail($list[0]);
                 $verification = trim($list[1]);
                 $json = json_decode($user->forgePwdCode, true);
                 $userVerificationCode = $json['verification'];
                 $verifyTime = intval($json['time']);
                 $baseURL = BASE_URL . 'auth/login';
-                if($userVerificationCode == $verification && ($verifyTime+1800)>time()) {
+                if ($userVerificationCode == $verification && ($verifyTime + 1800) > time()) {
 
                     $mailer = Mailer::getInstance();
                     $mailer->toQueue(true, true);
@@ -338,10 +386,15 @@ EOF;
                 return $result;
             }
 
-            if($user->enable == 0) {
+            if ($user->enable == 0) {
                 $verify_code = json_decode($user->forgePwdCode, true)['verification'];
+<<<<<<< HEAD
                 if($verify_code!=null) {
                     $result['message'] = 'Your account has not been evaluated mail check, please try again after checking is completed!';
+=======
+                if ($verify_code != null) {
+                    $result['message'] = '您的账户还未进行邮箱校验，请校验完毕后再试!';
+>>>>>>> sendya/master
                     return $result;
                 }
             }
@@ -360,12 +413,12 @@ EOF;
             $user->forgePwdCode = json_encode($forgePwdCode);
             $content = Option::get('custom_mail_forgePassword_content');
             $params = [
-                'code'      => $code,
-                'nickname'  => $user->nickname,
-                'email'     => $user->email,
-                'useTraffic'=> Utils::flowAutoShow($user->flow_up+$user->flow_down),
-                'transfer'  => Utils::flowAutoShow($user->transfer),
-                'expireTime'=> date('Y-m-d H:i:s', $user->expireTime)
+                'code' => $code,
+                'nickname' => $user->nickname,
+                'email' => $user->email,
+                'useTraffic' => Utils::flowAutoShow($user->flow_up + $user->flow_down),
+                'transfer' => Utils::flowAutoShow($user->transfer),
+                'expireTime' => date('Y-m-d H:i:s', $user->expireTime)
             ];
             $content = Utils::placeholderReplace($content, $params);
 
@@ -408,13 +461,13 @@ EOF;
 
                     $content = Option::get('custom_mail_forgePassword_content_2');
                     $params = [
-                        'code'      => $code,
-                        'newPassword'=> $newPassword,
-                        'nickname'  => $user->nickname,
-                        'email'     => $user->email,
-                        'useTraffic'=> Utils::flowAutoShow($user->flow_up+$user->flow_down),
-                        'transfer'  => Utils::flowAutoShow($user->transfer),
-                        'expireTime'=> date('Y-m-d H:i:s', $user->expireTime)
+                        'code' => $code,
+                        'newPassword' => $newPassword,
+                        'nickname' => $user->nickname,
+                        'email' => $user->email,
+                        'useTraffic' => Utils::flowAutoShow($user->flow_up + $user->flow_down),
+                        'transfer' => Utils::flowAutoShow($user->transfer),
+                        'expireTime' => date('Y-m-d H:i:s', $user->expireTime)
                     ];
                     $content = Utils::placeholderReplace($content, $params);
 

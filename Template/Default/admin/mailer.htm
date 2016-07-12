@@ -32,12 +32,19 @@
                     </div>
                     <div class="panel-body">
                         <form action="" onsubmit="return false;">
+<<<<<<< HEAD
                             <input type="radio" name="mail_type" class="cbr cbr-secondary" value="MailGun" <if condition="$selectMail == 'MailGun'">checked</if>/> MailGun behalf Systems<br/><br/>
                             <input type="radio" name="mail_type" class="cbr cbr-secondary" value="Smtp" <if condition="$selectMail == 'Smtp'">checked</if>/> SMTP mode<br/><br/>
                             <input type="radio" name="mail_type" class="cbr cbr-secondary disabled" value="CoreSend"
                                    disabled="disabled" <if condition="$selectMail == 'CoreSend'">checked</if>/> Send e-mail function built-in PHP<br/><br/>
                             <input type="radio" name="mail_type" class="cbr cbr-secondary disabled" value="CAT_API"
                                    disabled="disabled" <if condition="$selectMail == 'CAT_API'">checked</if>/> Mail delivery provided by the API SS Cat (sender display:SS Cat&lt;post@sscat.it&gt;)<br/>
+=======
+                            <input type="radio" name="mail_type" class="cbr cbr-secondary" value="MailGun" <if condition="$selectMail == 'MailGun'">checked</if>/> MailGun代发系统<br/><br/>
+                            <input type="radio" name="mail_type" class="cbr cbr-secondary" value="Smtp" <if condition="$selectMail == 'Smtp'">checked</if>/> SMTP方式<br/><br/>
+                            <input type="radio" name="mail_type" class="cbr cbr-secondary" value="AliyunDirectMail" <if condition="$selectMail == 'AliyunDirectMail'">checked</if>/> 阿里云邮件推送<br/><br/>
+                            <input type="radio" name="mail_type" class="cbr cbr-secondary" value="CoreSend" <if condition="$selectMail == 'CoreSend'">checked</if>/> PHP内置邮件发送函数<br/><br/>
+>>>>>>> sendya/master
                             <br/>
                             <br/>
                             <button type="button" class="btn btn-success" id="save-setting">Save Now</button>
@@ -208,6 +215,7 @@
             });
         });
     });
+<<<<<<< HEAD
     function optionModify(optionName) {
         $("#modal-6 .modal-body").html(modal_default_body);
         reset(false);
@@ -250,5 +258,7 @@
         });
         $('#modal-6').modal('show', {backdrop: 'static'});
     }
+=======
+>>>>>>> sendya/master
 </script>
 <import template="/admin/_footer"/>
