@@ -34,12 +34,8 @@ class Invite
     {
         $user = User::getUserByUserId(User::getCurrent()->uid);
 
-<<<<<<< HEAD
-        $result = array('error' => 1, 'message' => 'Create invitation code fails，You do not have an invitation code to create that number of times again. You can always purchase invitation code with exchange for traffic. (10GB / per invitations)');
-=======
-        $result = array('error' => 1, 'message' => '创建邀请码失败，您没有再次创建邀请码的次数了。当然，你可以用流量购买次数。(10GB/个)');
+        $result = array('error' => 1, 'message' => 'Create invitation code fails，You do not have an invitation code to create that number of times again. You can always purchase invitation code with exchange for traffic. (10GB / per invitations');
 
->>>>>>> sendya/master
         if ($user->invite_num > 0) {
             $invite = InviteModel::addInvite($user->uid, 'A', false);
             $result = array(

@@ -60,37 +60,28 @@ class Card
                 if (is_numeric($card->expireTime)) {
                     $cardDay = intval($card->expireTime);
                 }
-<<<<<<< HEAD
-                if ($user->expireTime < time()) {
-                    $user->expireTime = time() + (3600 * 24 * $cardDay); // Expire date
-                } else {
-                    $user->expireTime = $user->expireTime + (3600 * 24 * $cardDay); // Expire date
-                }
-                $result['message'] = 'Your account has been upgraded to ' . Utils::planAutoShow($user->plan) . ' ,Total traffic ' . Utils::flowAutoShow($user->transfer) . ', used ' . Utils::flowAutoShow($user->flow_down + $user->flow_up) . ', Expire date:' . date('Y-m-d H:i:s',
-=======
 
                 $expireTime = 0;
 
-                if ($user->plan == $card->info) { // 卡片与账户类型相等
+                if ($user->plan == $card->info) { // Card and account types are equal
                     if ($user->expireTime > time()) {
-                        $expireTime = $user->expireTime + (3600 * 24 * $cardDay);// 到期时间 = 当前账户到期时间+卡片时间
+                        $expireTime = $user->expireTime + (3600 * 24 * $cardDay);// Expires = current account + card expiration time
                     } else {
-                        $expireTime = time() + (3600 * 24 * $cardDay); // 到期时间 = 当前系统续费时间+卡片时间
+                        $expireTime = time() + (3600 * 24 * $cardDay); // Expires = renew the current system time + time card
                     }
                 } else {
 
                     if ($user->expireTime < time() || !$custom_transfer_repeat) {
-                        $expireTime = time() + (3600 * 24 * $cardDay); // 到期时间 = 不叠加原时间 （当前系统续费时间+卡片时间）
+                        $expireTime = time() + (3600 * 24 * $cardDay); // Expires = not superimposed time (current system time + card renewal time)
                     } else {
-                        $expireTime = $user->expireTime + (3600 * 24 * $cardDay); // 到期时间 = 当前账户到期时间+卡片时间
+                        $expireTime = $user->expireTime + (3600 * 24 * $cardDay); // Expires = current account + card expiration time
                     }
                 }
                 $user->expireTime = $expireTime;
                 $user->plan = $card->info;
                 $user->transfer = Utils::GB * intval($custom_transfer_level[$user->plan]);
 
-                $result['message'] = '您的账户已升级到 ' . Utils::planAutoShow($user->plan) . ' ,共有流量 ' . Utils::flowAutoShow($user->transfer) . ', 已用 ' . Utils::flowAutoShow($user->flow_down + $user->flow_up) . ', 到期时间：' . date('Y-m-d H:i:s',
->>>>>>> sendya/master
+                $result['message'] = 'Your account has been upgraded to ' . Utils::planAutoShow($user->plan) . ' ,Total traffic ' . Utils::flowAutoShow($user->transfer) . ', used ' . Utils::flowAutoShow($user->flow_down + $user->flow_up) . ', Expire date:' . date('Y-m-d H:i:s',
                         $user->expireTime);
             } elseif ($card->type == 1) {
                 if ($user->plan == 'Z') {
