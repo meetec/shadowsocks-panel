@@ -59,21 +59,13 @@
 
                             </div>
 
-                            <div class="row">
+                             <div class="row">
                                 <div class="col-xs-6">
                                     <div class="dataTables_info" id="dataTables_info"></div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="dataTables_paginate paging_simple_numbers" style=" float: right;margin: 0">
-<<<<<<< HEAD
-                                        <ul class="pagination">
-                                            <li class="paginate_button previous disabled" tabindex="0"><a href="javascript:;">Previous</a></li>
-                                            <li class="paginate_button active" tabindex="0"><a href="javascript:;">1</a></li>
-                                            <li class="paginate_button next disabled" tabindex="0"><a href="javascript:;">Next Page</a></li>
-                                        </ul>
-=======
                                         <ul class="pagination"></ul>
->>>>>>> sendya/master
                                     </div>
                                 </div>
                             </div>
@@ -453,35 +445,15 @@
                         newData += '</tr>';
                         table.append(newData);
                     }
-<<<<<<< HEAD
-                    $("#dataTables_info").html("display "+ (data.currentPage-1)*data.pageSize +" - " + (data.currentPage)*data.pageSize + " Pieces of data, a total of "+data.totalPage+" page");
-=======
                     var itemNum = data.data.length;
                     var startNum = (data.currentPage - 1) * data.pageSize + 1;
                     $("#dataTables_info").html("显示 "+ startNum +" - " + (startNum + itemNum -1) + " 条数据, 共 "+data.totalPage+" 页");
->>>>>>> sendya/master
                     createPageNav(data.totalPage, data.currentPage);
                 }
             }
         });
     }
     function createPageNav(totalPage, currentPage) {
-<<<<<<< HEAD
-        var pageNav = '<li class="paginate_button previous ' + (currentPage==1?'disabled':'') + '" tabindex="0"><a href="javascript:;" onclick="getList('+(currentPage-1)+')">Previous</a></li>';
-        if(totalPage - currentPage > 3) {
-            pageNav += '<li class="paginate_button " tabindex="0"><a href="javascript:;" onclick="getList('+(currentPage-1)+')">'+(currentPage-1)+'</a></li>';
-            pageNav += '<li class="paginate_button " tabindex="0"><a href="javascript:;" onclick="getList('+(currentPage+1)+')">'+(currentPage+1)+'</a></li>';
-            pageNav += '<li class="paginate_button " tabindex="0"><a href="javascript:;" onclick="getList('+(currentPage+2)+')">'+(currentPage+2)+'</a></li>';
-            pageNav += '<li class="paginate_button " tabindex="0"><a href="javascript:;" onclick="getList('+(currentPage+3)+')">'+(currentPage+3)+'</a></li>';
-            pageNav += '<li class="paginate_button disabled" tabindex="0"><a href="javascript:;">...</a></li>';
-            pageNav += '<li class="paginate_button " tabindex="0"><a href="javascript:;" onclick="getList('+totalPage+')">'+totalPage+'</a></li>';
-        } else if(totalPage > 2) {
-            pageNav += '<li class="paginate_button " tabindex="0"><a href="javascript:;" onclick="getList(1)">1</a></li>';
-            pageNav += '<li class="paginate_button " tabindex="0"><a href="javascript:;" onclick="getList(2)">2</a></li>';
-            pageNav += '<li class="paginate_button " tabindex="0"><a href="javascript:;" onclick="getList('+totalPage+')">'+totalPage+'</a></li>';
-        }
-        pageNav += '<li class="paginate_button next ' + (currentPage==totalPage?'disabled':'') + '" tabindex="0"><a href="javascript:;" onclick="getList('+(currentPage+1)+')">Next Page</a></li>';
-=======
         var pageNav = '<li class="paginate_button active" tabindex="0"><a href="javascript:;" onclick="getList('+(currentPage)+')">'+(currentPage)+'</a></li>';
 
         for (var i = 1; i <= 3; i++) {
@@ -508,7 +480,6 @@
         if (currentPage < totalPage) {
             pageNav = pageNav + '<li class="paginate_button " tabindex="0"><a href="javascript:;" onclick="getList('+totalPage+')">'+totalPage+'</a></li>' + '<li class="paginate_button next ' + (currentPage==totalPage?'disabled':'') + '" tabindex="0"><a href="javascript:;" onclick="getList('+(currentPage+1)+')">下一页</a></li>';
         }
->>>>>>> sendya/master
         $(".pagination").html(pageNav);
     }
     function getTime(/** timestamp=0 **/) {

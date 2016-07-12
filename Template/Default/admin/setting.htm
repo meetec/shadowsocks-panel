@@ -117,65 +117,40 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                             <form id="other-form" name="other-form" action="/admin/setting/saveOther.json">
-<<<<<<< HEAD
-                            <table cellspacing="0" class="table table-small-font table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th width="200px">#</th>
-                                    <th>Value</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Max (MB)</td>
-                                        <td><input class="form-control" name="check_transfer_max" value="{$check_transfer_max}"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Max (MB)</td>
-                                        <td><input class="form-control" name="check_transfer_min" value="{$check_transfer_min}"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td>User test days</td>
-                                        <td><input class="form-control" name="user_test_day" value="{$user_test_day}"/></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-=======
                                 <table cellspacing="0" class="table table-small-font table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th width="200px">#</th>
-                                            <th>值</th>
+                                            <th>Value</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>新用户注册邮箱验证</td>
+                                            <td>New user registration mail authentication</td>
                                             <td>
                                                 <input type="checkbox" name="mail_verify" value="1" class="iswitch-lg iswitch-info" <if condition="$mail_verify == 1">checked</if>>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>套餐卡充值时间叠加</td>
+                                            <td>Package card recharge time superposition</td>
                                             <td>
                                                 <input type="checkbox" name="custom_transfer_repeat" value="1" class="iswitch-lg iswitch-info" <if condition="$custom_transfer_repeat == 1">checked</if>>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>签到流量最大值(MB)</td>
+                                            <td>Maximum traffic (MB)</td>
                                             <td><input class="form-control" name="check_transfer_max" value="{$check_transfer_max}"/></td>
                                         </tr>
                                         <tr>
-                                            <td>签到流量最小值(MB)</td>
+                                            <td>Minimum traffic (MB)</td>
                                             <td><input class="form-control" name="check_transfer_min" value="{$check_transfer_min}"/></td>
                                         </tr>
                                         <tr>
-                                            <td>测试用户试用时长(天)</td>
+                                            <td>User test days(day)</td>
                                             <td><input class="form-control" name="user_test_day" value="{$user_test_day}"/></td>
                                         </tr>
                                     </tbody>
                                 </table>
->>>>>>> sendya/master
                             </form>
                         </div>
                     </div>
